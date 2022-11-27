@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col s8 offset-s2">
+      <div class="card">
+        <div class="sm-jumbotron center-align">
+          <h2>User Registration</h2>
+        </div>
+        <form class="col s12 white" #userRegistrationForm="ngForm" (ngSubmit)="OnSubmit(userRegistrationForm)">
+          <div class="row">
+            
+            <div class="input-field col s6">
+              <input class="validate" type="password" name="Password" #password="ngModel" [(ngModel)]="user.password" required  minlength="3">
+              <label [attr.data-error]="password.errors!=null?(password.errors['required']?'Required field!':'Minimum 3 characters needed'):''">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input class="validate" type="text" name="Email" #email="ngModel" [(ngModel)]="user.email" [pattern]="emailPattern">
+              <label data-error="Invalid email!">Email</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <input type="text" name="nom" #nom="ngModel" [(ngModel)]="user.nom">
+              <label>First Name</label>
+            </div>
+            <div class="input-field col s6">
+              <input type="text" name="prenom" #prenom="ngModel" [(ngModel)]="user.prenom">
+              <label>Last Name</label>
+            </div>
+          </div>
+          <div class="row">
+              <div class="input-field col s12">
+                <button [disabled]="!userRegistrationForm.valid" class="btn-large btn-submit" type="submit">Submit</button>
+              </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
