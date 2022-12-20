@@ -12,10 +12,11 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { FormsModule } from '@angular/forms';
+import { InscritComponent } from './components/demandes/inscrit/inscrit.component';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, DemandeComponent
+        AppComponent, NotfoundComponent, DemandeComponent,InscritComponent
     ],
     imports: [BrowserModule,
         AppRoutingModule,
