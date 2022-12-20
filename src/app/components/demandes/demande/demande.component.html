@@ -1,0 +1,91 @@
+					<div class="grid">
+						<div class="col-12">
+							<div class="card">
+								<h5>Demandes</h5>
+								<p-table #dt1 [value]="demandes" dataKey="id" [rows]="5"  [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll">				
+									<ng-template pTemplate="caption">
+										<div class="flex justify-content-between flex-column sm:flex-row">
+											
+											<button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"></button>
+											<span class="p-input-icon-left mb-2">
+												<i class="pi pi-search"></i>
+												<input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword" class="w-full"/>
+											</span>
+										</div>
+									</ng-template>
+									<ng-template pTemplate="header">
+										<tr>
+											<th style="min-width: 12rem">
+												<div class="flex justify-content-between align-items-center">
+													IdSession								
+												</div>
+											</th>					
+											<th style="min-width: 10rem">
+												<div class="flex justify-content-between align-items-center">
+													Date								
+												</div>
+											</th>						
+											<th style="min-width: 12rem">
+												<div class="flex justify-content-between align-items-center">
+													Etat
+												</div>
+											</th>		
+										</tr>
+									</ng-template>
+									<ng-template pTemplate="body" let-customer>
+										<tr *ngFor="let demande of demandes">
+											<td>
+												{{demande.idSession}}
+											</td>										
+											<td>
+												{{demande.date | date: 'MM/dd/yyyy'}}
+											</td>										
+											<td>
+											<!--	<div class="grid"> 
+													<p-confirmDialog header="Confirmation" key="confirm1"  icon="pi pi-exclamation-triangle"  message="Are you sure you want to accept or refuse this demande?"
+																	 [style]="{width: '350px'}" acceptButtonStyleClass="p-button-success p-button-text" rejectButtonStyleClass="p-button-danger p-button-text" ></p-confirmDialog>
+													<div class="grid">
+														<div class="col-12">
+															<button type="text" (click)="confirm1()" pButton class="btn btn-info" style="width:auto;">{{demande.etat}}</button>
+														</div>
+													</div>
+												</div>
+												<button class="btn btn-info">{{demande.etat}}</button> !-->
+												
+										
+														
+														<p-dialog  header="Confirmation"  [(visible)]="display" [modal]="true" showEffect="fade" [style]="{width: '50vw'}" [breakpoints]="{'990px': '90vw'}">
+														  <h4 class="line-height-3 m-0" >
+																Are you sure you want to accept or refuse this demande ?
+														  </h4>
+															<ng-template pTemplate="footer">
+																    <button  pButton  (click)="display=false" label="Refus" class="p-button-outlined p-button-danger"></button>&nbsp;&nbsp;&nbsp;
+																	<button pButton  (click)="display=false" label="Accept" class="p-button-outlined p-button-success"></button>
+																	
+															</ng-template>
+														</p-dialog>
+															<button  (click)="display=true" pButton class="p-button-raised p-button-help">{{demande.etat}}</button>       
+													 
+											</td>			<!-- *ngIF="etat ==refuse" label="Disabled" disabled="true" -->
+										</tr>
+									</ng-template>
+									<ng-template pTemplate="emptymessage">
+										<tr>
+											<td colspan="8">No customers found.</td>
+										</tr>
+									</ng-template>
+									<ng-template pTemplate="loadingbody">
+										<tr>
+											<td colspan="8">Loading customers data. Please wait.</td>
+										</tr>
+									</ng-template>
+								</p-table>
+							</div>
+					
+						</div>
+					
+					
+					</div>
+					
+    	
+	
