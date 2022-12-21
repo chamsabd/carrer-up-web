@@ -1,0 +1,36 @@
+<h1>Courses :</h1>
+<div class="d-flex justify-content-center">
+<div class="spinner-border" role="status" >
+</div>
+</div>
+<table >
+<thead>
+<tr>
+<th scope="col">ID</th>
+<th scope="col">Name</th>
+<th scope="col">Description</th>
+<th scope="col">Price</th>
+<th scope="col">Category</th>
+<th scope="col">Sessions</th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let f of formations">
+							
+    <td>{{f.id}}</td>
+    <td>{{f.nom}}</td>
+    <td>{{f.description}}</td>
+    
+    <td> {{f.prix}}</td>
+    <td>{{f.category}}</td>
+    <td><Button class="btn btn-info">Show sessions</Button></td>
+   
+    
+  </tr>
+
+							
+  
+  
+</tbody>
+</table> 
+
