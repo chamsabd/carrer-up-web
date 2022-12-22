@@ -10,15 +10,16 @@ import { DemandeService } from 'src/app/service/demande.service';
   styleUrls: ['./demande.component.scss']
 })
 export class DemandeComponent implements OnInit {
-  demandes:any;
+  demandes:any = [];
   display: boolean = false;
   @ViewChild('filter') filter!: ElementRef;
   constructor(private demandeService: DemandeService ,private confirmationService: ConfirmationService) { }
   ngOnInit(): void {
     this.demandeService.getAllDemande().subscribe(
       response=>{
-        this.demandes = response;
-        console.log(this.demandes);
+        let list = response
+        this.demandes = JSON.parse(JSON.stringify(list));
+        console.log(list);
       }
     )
    

@@ -8,9 +8,18 @@ import { InscritService } from 'src/app/service/inscrit.service';
   styleUrls: ['./inscrit.component.scss']
 })
 export class InscritComponent  implements OnInit {
+  inscrits:any=[];
   @ViewChild('filter') filter!: ElementRef;
   constructor(private inscritService: InscritService ) { }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.inscritService.getInscrit().subscribe(
+      response=>{
+        let list=response
+        this.inscrits=JSON.parse(JSON.stringify(list));
+        console.log(list);
+      }
+    )
+  }
 
 
 

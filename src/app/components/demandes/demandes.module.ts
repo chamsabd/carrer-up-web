@@ -8,8 +8,8 @@ import { InscritComponent } from './inscrit/inscrit.component';
 
 @NgModule({
   declarations: [
-    DemandeComponent,
-    InscritComponent
+   // DemandeComponent,
+   // InscritComponent
   ],
   imports: [
     CommonModule,
