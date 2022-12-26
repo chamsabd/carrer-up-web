@@ -1,91 +1,89 @@
-					<div class="grid">
-						<div class="col-12">
-							<div class="card">
-								<h5>Demandes</h5>
-								<p-table #dt1 [value]="demandes" dataKey="id" [rows]="5"  [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll">				
-									<ng-template pTemplate="caption">
-										<div class="flex justify-content-between flex-column sm:flex-row">
-											
-											<button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"></button>
-											<span class="p-input-icon-left mb-2">
+<div class="grid">
+	<div class="col-12">
+		<div class="card">
+			<h5>Training Demand</h5>
+			<p-table #dt1 [value]="demandes" dataKey="id" [rows]="5" [rowHover]="true"
+				styleClass="p-datatable-gridlines" [paginator]="true"
+				[globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll">
+				<ng-template pTemplate="caption">
+					<div class="flex justify-content-between flex-column sm:flex-row">
+
+						<button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"></button>
+						<!--	<span class="p-input-icon-left mb-2">
 												<i class="pi pi-search"></i>
 												<input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword" class="w-full"/>
-											</span>
-										</div>
-									</ng-template>
-									<ng-template pTemplate="header">
-										<tr>
-											<th style="min-width: 12rem">
-												<div class="flex justify-content-between align-items-center">
-													IdSession								
-												</div>
-											</th>					
-											<th style="min-width: 10rem">
-												<div class="flex justify-content-between align-items-center">
-													Date								
-												</div>
-											</th>						
-											<th style="min-width: 12rem">
-												<div class="flex justify-content-between align-items-center">
-													Etat
-												</div>
-											</th>		
-										</tr>
-									</ng-template>
-										<ng-template pTemplate="body" let-demande>
-											<ng-container>
-												<tr>
-													<td>
-														{{demande.idSession}}
-													</td>										
-													<td>
-														{{demande.date | date: 'MM/dd/yyyy'}}
-													</td>										
-													<td>					
-																<p-dialog  header="Confirmation"  [(visible)]="display" [modal]="true" showEffect="fade" [style]="{width: '50vw'}" [breakpoints]="{'990px': '90vw'}">
-																<h4 class="line-height-3 m-0" >
-																		Are you sure you want to accept or refuse this demande ?
-																</h4>
-																	<ng-template pTemplate="footer">
-																			<button  pButton  (click)="display=false" label="Refus" class="p-button-outlined p-button-danger"></button>&nbsp;&nbsp;&nbsp;
-																			<button pButton  (click)="display=false" label="Accept" class="p-button-outlined p-button-success"></button>
-																			
-																	</ng-template>
-																</p-dialog>
-																
-																<ng-template [ngIf]="demande.etat == 'en cours de traitement'">
-																	<button (click)="display=true" pButton class="p-button-rounded p-button-warning">{{demande.etat}}</button> 
-																</ng-template>
-																<ng-template [ngIf]="demande.etat == 'accepter'">
-																	<button (click)="display=true" pButton class="p-button-rounded p-button-success"  disabled="true" >{{demande.etat}}</button> 
-																</ng-template>
-																<ng-template [ngIf]="demande.etat == 'refuser'">
-																	<button (click)="display=true" pButton class="p-button-rounded p-button-danger"  disabled="true" >{{demande.etat}}</button> 
-																</ng-template>
-																	<!--<button *ngIf="demande.etat =='refuse'" (click)="display=true" pButton class="p-button-raised p-button-help">{{demande.etat}}</button>  
-																	<button *ngIf="demande.etat =='accept'" (click)="display=true" pButton class="p-button-raised p-button-help">{{demande.etat}}</button>    !-->   
-															
-													</td>			<!-- *ngIF="etat ==refuse" label="Disabled" disabled="true" -->
-												</tr>
-											</ng-container>
-										</ng-template>
-										<ng-template pTemplate="emptymessage">
-											<tr>
-												<td colspan="8">No customers found.</td>
-											</tr>
-										</ng-template>
-										<ng-template pTemplate="loadingbody">
-											<tr>
-												<td colspan="8">Loading customers data. Please wait.</td>
-											</tr>
-										</ng-template>
-								</p-table>
-							</div>
-					
-						</div>
-					
-					
+											</span>-->
 					</div>
-					
-    	
-	
+				</ng-template>
+				<ng-template pTemplate="header">
+					<tr>
+						<th pSortableColumn="name">Training name <p-sortIcon field="name"></p-sortIcon></th>
+						<th pSortableColumn="name">Date <p-sortIcon field="name"></p-sortIcon></th>
+						<th pSortableColumn="name">State <p-sortIcon field="name"></p-sortIcon></th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-demande let-index="rowIndex">
+					<ng-container>
+						<tr>
+
+							<div *ngFor="let form of formations">
+								<ng-template [ngIf]="demande.idSession == form.id">
+									<td>{{form.nom}}</td>
+								</ng-template>
+							</div>
+							<td>
+								{{demande.date | date: 'dd/MM/yyyy'}}
+							</td>
+							<td> <p-toast></p-toast>
+								<p-dialog header="Confirmation" [(visible)]="display_diags[index]" [modal]="true"
+									showEffect="fade" [style]="{width: '40vw'}" [breakpoints]="{'990px': '90vw'}">
+									<h5 class="line-height-3 m-0">
+										Are you sure you want to accept or refuse this demande ?
+									</h5>
+									<ng-template pTemplate="footer">
+										<button pButton (click)="refuseInscript(demande._id, index)" label="Refus"
+											class="p-button-outlined p-button-danger"></button>&nbsp;&nbsp;&nbsp;
+										<button pButton (click)="acceptInscript(demande._id, index)" label="Accept"
+											class="p-button-outlined p-button-success"></button>
+
+									</ng-template>
+								</p-dialog>
+
+								<ng-template [ngIf]="demande.etat == 'In progress'">
+									<button (click)="display_diags[index]=true;" pButton
+										class="p-button-rounded p-button-primary">{{demande.etat}}</button>
+								</ng-template>
+								<ng-template [ngIf]="demande.etat == 'accepted'">
+									<button (click)="display_diags[index]=true" pButton
+										class="p-button-rounded p-button-success"
+										disabled="true">{{demande.etat}}</button>
+								</ng-template>
+								<ng-template [ngIf]="demande.etat == 'refused'">
+									<button (click)="display_diags[index]=true" pButton
+										class="p-button-rounded p-button-danger"
+										disabled="true">{{demande.etat}}</button>
+								</ng-template>
+								<!--<button *ngIf="demande.etat =='refuse'" (click)="display=true" pButton class="p-button-raised p-button-help">{{demande.etat}}</button>  
+																	<button *ngIf="demande.etat =='accept'" (click)="display=true" pButton class="p-button-raised p-button-help">{{demande.etat}}</button>    !-->
+
+							</td> <!-- *ngIF="etat ==refuse" label="Disabled" disabled="true" -->
+						</tr>
+					</ng-container>
+				</ng-template>
+				<ng-template pTemplate="emptymessage">
+					<tr>
+						<td colspan="8">No demandes found.</td>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="loadingbody">
+					<tr>
+						<td colspan="8">Loading demandes data. Please wait.</td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</div>
+
+	</div>
+
+
+</div>

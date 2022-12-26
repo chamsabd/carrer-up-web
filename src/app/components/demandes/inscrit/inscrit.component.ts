@@ -9,6 +9,7 @@ import { InscritService } from 'src/app/service/inscrit.service';
 })
 export class InscritComponent  implements OnInit {
   inscrits:any=[];
+  formations:any;
   @ViewChild('filter') filter!: ElementRef;
   constructor(private inscritService: InscritService ) { }
   ngOnInit(): void {
@@ -17,6 +18,14 @@ export class InscritComponent  implements OnInit {
         let list=response
         this.inscrits=JSON.parse(JSON.stringify(list));
         console.log(list);
+      }
+    )
+
+    this.inscritService.getAllFormation().subscribe(
+      (response1:any)=>{
+       
+        this.formations =response1["content"] ;
+        console.log(this.formations);
       }
     )
   }

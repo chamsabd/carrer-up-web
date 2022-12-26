@@ -13,7 +13,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { FormsModule } from '@angular/forms';
 import { InscritComponent } from './components/demandes/inscrit/inscrit.component';
-
+import { ToastModule } from 'primeng/toast';
 @NgModule({
     declarations: [
         AppComponent, NotfoundComponent, DemandeComponent,InscritComponent
@@ -27,6 +27,7 @@ import { InscritComponent } from './components/demandes/inscrit/inscrit.componen
         ConfirmDialogModule,
         ConfirmPopupModule,
         FormsModule,
+        ToastModule,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
