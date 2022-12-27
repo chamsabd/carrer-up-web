@@ -47,6 +47,7 @@ export class DemandeComponent implements OnInit {
         this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Demand accepted' });
       },(err)=>{
         console.log(err)
+        this.messageService.add({ severity: 'error', summary: 'Sorry', detail: 'No More Places' });
       })
      }
      refuseInscript(id: any, index: any){
