@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 
-
 @NgModule({
     declarations: [
         AppComponent, NotfoundComponent
