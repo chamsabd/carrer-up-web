@@ -12,28 +12,10 @@ import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { FormsModule } from '@angular/forms';
 import { InscritComponent } from './components/demandes/inscrit/inscrit.component';
 import { ToastModule } from 'primeng/toast';
-@NgModule({
-    declarations: [
-        AppComponent, NotfoundComponent, DemandeComponent,InscritComponent
-    ],
-    imports: [BrowserModule,
-        AppRoutingModule,
-        AppLayoutModule,
-        InputTextModule,
-        TableModule,
-        DialogModule,
-        ConfirmDialogModule,
-        ConfirmPopupModule,
-        FormsModule,
-        ToastModule,
-    ],
-
 import { HttpClientModule } from '@angular/common/http';
 import { FormationComponent } from './components/formations/formation/formation.component';
-import { BrowserModule } from '@angular/platform-browser';
 import { AddFormationComponent } from './components/formations/add-formation/add-formation.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
@@ -54,9 +36,18 @@ import { OrderListModule } from 'primeng/orderlist';
 import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent,FormationComponent, AddFormationComponent, FormationsListesComponent, 
+        AppComponent, NotfoundComponent, DemandeComponent,InscritComponent,FormationComponent, AddFormationComponent, FormationsListesComponent,
     ],
-    imports: [
+    imports: [BrowserModule,
+        AppRoutingModule,
+        AppLayoutModule,
+        InputTextModule,
+        TableModule,
+        DialogModule,
+        ConfirmDialogModule,
+        ConfirmPopupModule,
+        FormsModule,
+        ToastModule,
         CommonModule,
         AppRoutingModule,
         ButtonModule,
@@ -65,10 +56,8 @@ import { DropdownModule } from 'primeng/dropdown';
         HttpClientModule,
         BrowserModule,
         FormsModule ,
-        ToolbarModule,
-        
+        ToolbarModule,       
         RatingModule,
-      
         InputTextareaModule,
         DropdownModule,
         RadioButtonModule,
@@ -79,7 +68,12 @@ import { DropdownModule } from 'primeng/dropdown';
 		InputTextModule,
 		DropdownModule,
 		RatingModule,
-        ReactiveFormsModule  ,OverlayPanelModule ],
+        ReactiveFormsModule  ,OverlayPanelModule
+    ],
+
+
+
+  
 
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
