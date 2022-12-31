@@ -5,6 +5,7 @@ export class Session {
     dateFin!:Date;
     etat!:String;
     nbrPlace!:number;
-    
+    idResponsable!:number;
+    formation_id!:number;
     
 }

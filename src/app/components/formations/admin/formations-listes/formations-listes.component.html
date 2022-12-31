@@ -13,7 +13,7 @@
                 
             </p-toolbar>
 
-            <p-table #dt [value]="formations"  responsiveLayout="scroll"  [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProducts"  [rowHover]="true" dataKey="id" >
+            <p-table #dt [value]="formations"  responsiveLayout="scroll"  [globalFilterFields]="['nom','prix','sessions.etat','category']"[rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProducts"  [rowHover]="true" dataKey="id" >
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                         <h5 class="m-0">Training Courses</h5>
@@ -72,6 +72,8 @@
                                         <th style="min-width:5rem" pSortableColumn ="dateDebut">Date debut <p-sortIcon field="dateDebut"></p-sortIcon> </th>
                                         <th style="min-width:5rem" pSortableColumn ="dateFin">Date Fin <p-sortIcon field="dateFin"></p-sortIcon> </th>
                                         <th style="min-width:8rem" pSortableColumn="nbrPlace">Nombre de Place <p-sortIcon field="nbrPlace"></p-sortIcon></th>
+                                        <th style="min-width:8rem" pSortableColumn="etat">Status <p-sortIcon field="Etat"></p-sortIcon></th>
+                                        <th style="min-width:8rem" >Actions </th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-s>
@@ -80,6 +82,15 @@
                                         <td>{{s.dateDebut}}</td>
                                         <td>{{s.dateFin}}</td>
                                         <td>{{s.nbrPlace}}</td>
+                                        <td>{{s.etat}}</td>
+                                        <td style="width:14%; min-width:8rem;">
+                    
+                                            
+                                        <div class="flex">
+                                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(f)"></button>
+                                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteSession(s)"></button>
+                                        </div>
+                                    </td>
                                     </tr> 
                                 </ng-template>
                             </p-table>
@@ -93,7 +104,7 @@
                             <div class="flex">
                                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(f)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteProduct(f)"></button>
-                                <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-info mr-2" (click)="openNewSession()"></button>
+                                <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-info mr-2" (click)="openNewSession(f.id)"></button>
                             </div>
                         </td>
                     </tr>
@@ -122,9 +133,6 @@
                     <small class="ng-dirty ng-invalid" *ngIf="f['desc'].errors?.['minlength']">  Description must be at least 4 characters long.</small>
                     <small class="ng-dirty ng-invalid" *ngIf="f['desc'].touched && f['desc'].errors && f['desc'].errors['required']">Description is required.</small>
                 </div>
-
-           
-
                 <div class="field">
                     <label for="name">Category</label>
                     <input type="text" pInputText id="name" formControlName="category" [(ngModel)]="formation.category" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !formation.nom}"/>
@@ -132,11 +140,6 @@
                     <small class="ng-dirty ng-invalid" *ngIf="f['category'].errors?.['minlength']">  Category must be at least 4 characters long.</small>
                     <small class="ng-dirty ng-invalid" *ngIf="f['nom'].touched && f['category'].errors && f['category'].errors['required']">Category is required.</small>
                 </div>
-               
-                       
-                        
-               
-
                 <div class="formgrid grid">
                     <div class="field col">
                         <label for="price">Price</label>
@@ -182,29 +185,28 @@
                 <div class="field">
                     <label for="description"> Start Date </label>
 
-                    <input type="text" pInputText id="name" formControlName="dateDebut" [(ngModel)]="sessionf.dateDebut" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !formation.nom}"/>
+                    <input type="text" pInputText id="name" formControlName="dateDebut" [(ngModel)]="sessionf.dateDebut" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !sessionf.dateDebut}"/>
 
                 </div>
 
            
-
                 <div class="field">
                     <label for="name">Finish Date</label>
-                    <input type="text" pInputText id="name" formControlName="dateFin" [(ngModel)]="sessionf.dateFin" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !formation.nom}"/>
+                    <input type="text" pInputText id="name" formControlName="dateFin" [(ngModel)]="sessionf.dateFin" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !sessionf.dateFin}"/>
                 </div>
-               
-                       
-                        
-               
-
-                <div class="formgrid grid">
+                <div class="field">
+                    <label for="name">Status (Open or closed )</label>
+                    <input type="text" pInputText id="name" formControlName="etat" [(ngModel)]="sessionf.etat" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !sessionf.etat}"/>
+                </div>
+                 <div class="formgrid grid">
                     <div class="field col">
                         <label for="price">Places Number</label>
                         <p-inputNumber id="price" formControlName="nbrPlace" [(ngModel)]="sessionf.nbrPlace"  locale="en-Dt"></p-inputNumber>
 
                     </div>
-                
+                   
                 </div>
+              
                 </form>
             </ng-template>
 
@@ -213,6 +215,19 @@
                 <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveSession()"></button>
             </ng-template>
         </p-dialog>
+
+        
+        <p-dialog [(visible)]="deleteSessionDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="formation">Are you sure you want to delete <b>{{sessionf.nom}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProductDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSession()"></button>
+            </ng-template>
+        </p-dialog>
+
     </div>
 </div>
 

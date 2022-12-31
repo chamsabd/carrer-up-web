@@ -19,12 +19,14 @@ import { RatingModule } from 'primeng/rating';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CommonModule } from '@angular/common';
-import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
+import { DataViewModule } from 'primeng/dataview';
+import { PickListModule } from 'primeng/picklist';
+import { OrderListModule } from 'primeng/orderlist';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
     declarations: [
         AppComponent, NotfoundComponent,FormationComponent, AddFormationComponent, FormationsListesComponent, 
@@ -47,6 +49,12 @@ import { RippleModule } from 'primeng/ripple';
         DropdownModule,
         RadioButtonModule,
         InputNumberModule,
+        DataViewModule,
+		PickListModule,
+		OrderListModule,
+		InputTextModule,
+		DropdownModule,
+		RatingModule,
         ReactiveFormsModule ,TableModule ,OverlayPanelModule ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
