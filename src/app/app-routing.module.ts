@@ -25,7 +25,7 @@ import { FormationsListesComponent } from './components/formations/admin/formati
             
        //     { path: 'notfound', component: NotfoundComponent },
 
-                path: '', component: AppLayoutComponent, children:[{ path: 'courses/formations', component: FormationComponent },
+                {path: '', component: AppLayoutComponent, children:[{ path: 'courses/formations', component: FormationComponent },
                 { path: 'add', component: AddFormationComponent }
             ]        
             },
