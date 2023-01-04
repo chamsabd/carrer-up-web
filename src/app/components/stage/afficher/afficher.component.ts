@@ -114,6 +114,7 @@ export class AfficherComponent implements OnInit {
 
         }
 
+        
 
    delete(){
 console.log("delete"+this.id)

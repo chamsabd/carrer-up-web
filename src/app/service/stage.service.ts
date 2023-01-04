@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class StageService {
-  readonly rootUrl = '/STAGE-SERVER/';
+  readonly rootUrl = '/stage-server/';
   constructor(private http: HttpClient) { }
 
 body(stage : Stage){

@@ -22,16 +22,7 @@ export class CodeComponent {
     resetForm(form?: NgForm) {
       if (form != null)
         form.reset();
-      this.user = {
-        confirmpassword:'',
-        password: '',
-        email: '',
-        nom: '',
-        prenom: '',
-        roles:["user"],
-        code:'',
-        codeverif:''
-      }
+      this.user = new User()
     }
     OnSubmit(form: NgForm) {
       console.log(form.value);

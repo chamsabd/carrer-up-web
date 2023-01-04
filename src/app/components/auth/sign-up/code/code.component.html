@@ -10,11 +10,11 @@
                 </div>
                 <form class="col s12 white" #userRegistrationForm="ngForm" (ngSubmit)="OnSubmit(userRegistrationForm)">
                 <div>
-                    <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
+                    <!-- <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
                     <input id="email1" type="text" placeholder="Email address" pInputText  #email="ngModel" [(ngModel)]="user.email" name="email" [pattern]="emailPattern" class="w-full md:w-30rem mb-5" style="padding:1rem">
-                   
+                    -->
                     <label for="nom1" class="block text-900 text-xl font-medium mb-2">code de verification</label>
-                    <input id="nom1" type="text" placeholder="name" pInputText class="w-full md:w-30rem mb-5" name="codeverif" #codeverif="ngModel" [(ngModel)]="user.codeverif" [pattern]="user.code" style="padding:1rem">
+                    <input id="nom1" type="text" placeholder="code" pInputText class="w-full md:w-30rem mb-5" name="codeverif" #codeverif="ngModel" [(ngModel)]="user.codeverif" [pattern]="user.code" style="padding:1rem">
   
                
                    

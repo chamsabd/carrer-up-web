@@ -7,10 +7,12 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
-
+import { ToastModule } from 'primeng/toast';
+import { UserService } from 'src/app/service/user.service';
 @NgModule({
     imports: [
         CommonModule,
+        ToastModule,
         LoginRoutingModule,
         ButtonModule,
         CheckboxModule,
@@ -18,6 +20,7 @@ import { InputTextModule } from 'primeng/inputtext';
         FormsModule,
         PasswordModule
     ],
-    declarations: [LoginComponent]
+    declarations: [LoginComponent],
+    providers: [UserService],
 })
 export class LoginModule { }
