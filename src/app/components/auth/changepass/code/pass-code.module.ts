@@ -12,8 +12,8 @@ import { UserService } from 'src/app/service/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastModule } from 'primeng/toast';
 
-import { CodeComponent } from './code.component';
-import { CodeRoutingModule } from './code-routing.module';
+import { PassCodeComponent } from './pass-code.component';
+import { PassCodeRoutingModule } from './pass-code-routing.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -24,10 +24,10 @@ import { CodeRoutingModule } from './code-routing.module';
         PasswordModule,
         HttpClientModule,
         FormsModule,
-        CodeRoutingModule,
+        PassCodeRoutingModule,
         ToastModule,
     ],
-    declarations: [CodeComponent],
+    declarations: [PassCodeComponent],
     providers: [UserService],
 })
-export class CodeModule { }
+export class PassCodeModule { }

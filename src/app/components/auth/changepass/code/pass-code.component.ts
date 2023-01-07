@@ -9,10 +9,10 @@ import {ConfirmationService,  MessageService } from 'primeng/api';
 import { JsonPipe } from '@angular/common';
 @Component({
   selector: 'app-code',
-  templateUrl: './code.component.html',
+  templateUrl: './pass-code.component.html',
   providers: [ConfirmationService, MessageService]
 })
-export class CodeComponent {
+export class PassCodeComponent {
   user:User ={
     confirmpassword:'',
     password: '',
@@ -28,11 +28,41 @@ export class CodeComponent {
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   constructor(private router: Router,private activatedRoute: ActivatedRoute,public layoutService: LayoutService,private userService: UserService,
   private messageService:  MessageService) {
+     this.userService.sendcode(this.user).subscribe({
+      next: (data:any) => {
+       
+          console.log(data);
+          
+         // form.value.code=this.user.codeverif;
+          if (data.status== 200) {
+            this.user.code=data.body.message
+           
+  
+           
+       
+          }
+          else{
+            
+          
+            this.messageService.add({ severity: 'error', summary: 'erreur', detail: data.body.message });
+        
+         
+        }
+     
+          
+            
+        
+   
 
-      this.user = JSON.parse(localStorage.getItem("user")!!);
-    localStorage.clear();
-    
-      console.log(this.user);
+    },
+    error: (e) =>  {
+        console.log(e)
+        
+        this.messageService.add({ severity: 'error', summary: 'erreur', detail: e.error.message });
+        
+        }
+      }
+    )
       
     }
 

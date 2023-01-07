@@ -7,11 +7,11 @@ import { Router, ROUTES } from '@angular/router';
 import {ConfirmationService,  MessageService } from 'primeng/api';
 @Component({
   selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
+  templateUrl: './change-pass.component.html',
   providers: [ConfirmationService, MessageService]
 
 })
-export class SignUpComponent implements OnInit {
+export class ChangePassComponent implements OnInit {
 
   
   user: User ={
@@ -61,7 +61,7 @@ export class SignUpComponent implements OnInit {
               form.value.code=data.body.message;
             this.user=this.userService.body(form.value)
     localStorage.setItem("user",JSON.stringify( this.user));
-              this.router.navigate(['/auth/code',
+              this.router.navigate(['/auth/passcode',
              
             ]​);
           this.resetForm(form);

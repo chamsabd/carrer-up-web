@@ -100,13 +100,8 @@
 											<div *ngIf="dateFin.errors?.['required']">
 												dateFin is required.
 											</div>
-
-
 										</div>
-
-
 									</div>
-
 									<div *ngIf="stage._id!=undefined">
 										<label htmlFor="available">available</label>
 										<p-inputSwitch id="available" name="available" [(ngModel)]="stage.available"></p-inputSwitch>
@@ -132,7 +127,7 @@
 <p-dialog header="Dialog" [(visible)]="displayup" [modal]="true" showEffect="fade"
 [style]="{width: '50vw'}" [breakpoints]="{'960px': '75vw'}">
 <!-- [customUpload]="true" (uploadHandler)="onUpload($event)" -->
-<p-fileUpload name="file" url="/STAGE-SERVER/file/upload/{{id}}" (onUpload)="onUpload($event)"
+<p-fileUpload name="file" url="/stage-server/file/upload/{{id}}" (onUpload)="onUpload($event)"
 [multiple]="true" accept=".pdf" [maxFileSize]="1000000">
 <ng-template pTemplate="content">
 <ul *ngIf="uploadedFiles.length">
@@ -144,7 +139,6 @@
 
 	<button pButton (click)="resetFile() " (click)="display=false" icon="pi pi-times" label="close"
 		class="p-button-outlined"></button>
-	
 </ng-template>
 
 </p-dialog>
@@ -169,27 +163,7 @@
 </ng-template>
 
 </p-dialog>
-<!-- <p-sidebar [(visible)]="displaydw" position="center" [fullScreen]="true" [baseZIndex]="10000">
 
-	
-		<ng-template pTemplate="center"  pTemplate="content">
-		<ul *ngIf="uploadedFiles.length">
-		<li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes </li>
-		</ul>
-		</ng-template>
-	
-
-	
-		
-		<ng-template  pTemplate="footer">
-		
-			<button pButton (click)="displaydw=false; this.uploadedFiles=[]" (click)="display=false" icon="pi pi-times" label="close"
-				class="p-button-outlined"></button>
-			
-		</ng-template>
-	
-
-</p-sidebar> -->
 
 
 

@@ -34,36 +34,18 @@ export class LoginComponent implements OnInit{
     user: User = new User;
    
     constructor(private cookieService:CookieService,public router:Router,public layoutService: LayoutService,public userService:UserService,public messageService: MessageService) {
-   console.log("cons");
-   
-      this.userService.isLoggedIn$.pipe(
-        tap((isLoggedIn) => {
-          console.log(isLoggedIn);
-          
-          if (isLoggedIn) {
-            this.router.navigateByUrl('/');
-        }
-       
-       
-      
-        
-        })
-      );
+  
+ var t=  !!this.userService.token
+if (t) {
+  this.router.navigate(['/']);
+  
+}
+
         this.user.password="";
      }
         ngOnInit() {
           
-          console.log("init");
-      this.userService.validate().subscribe({
-        next: (data:any) => {
-          this.router.navigateByUrl('/');
-      },
-      error: (e) =>  {
-     
-        
-        }
-      
-      });
+       
       
         
     }
@@ -80,28 +62,28 @@ export class LoginComponent implements OnInit{
                 console.log(data.body);
                 
                 form.value.code=data.body.message;
-                 this.cookieService.set('token', data.body['tokenType'] + " " +data.body['accessToken']);
-                this.cookieService.set('role', data.body['roles']);
-                this.cookieService.set('id', data.body['id']);
-                this.cookieService.set('username', data.body['username']);
-                this.cookieService.set('email', data.body['email']);
+                
+                sessionStorage.setItem('token',btoa (data.body['tokenType'] + " " +data.body['accessToken']));
+                sessionStorage.setItem('role',btoa (data.body['roles']));
+                sessionStorage.setItem('id',btoa (data.body['id']));
+                sessionStorage.setItem('username',btoa (data.body['username']));
+                sessionStorage.setItem('email',btoa (data.body['email']));
    
                 this.router.navigate(['/']);
           
               }
               else{
+                console.log(data.body);
+                
                 this.messageService.add({ severity: 'error', summary: 'erreur', detail: data.body.message });
             
               }
                 
-            
-       
-  
         },
         error: (e) =>  {
-            console.log(e)
+          console.log("e "+JSON.stringify(e.status))
             
-            this.messageService.add({ severity: 'error', summary: 'erreur', detail: e.error.message });
+            this.messageService.add({ severity: 'error', summary: 'erreur', detail: e.status==401?"false credantials":JSON.stringify(e.error.message) });
             
             }
           });

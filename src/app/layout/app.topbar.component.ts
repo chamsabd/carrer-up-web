@@ -1,14 +1,30 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { LayoutService } from "./service/app.layout.service";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
+import { CookieService } from 'ngx-cookie-service';
+import { MenuItem } from 'primeng/api';
+import { UserService } from '../service/user.service';
+import { LayoutService } from "./service/app.layout.service";
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-topbar',
     templateUrl: './app.topbar.component.html'
 })
-export class AppTopBarComponent {
+export class AppTopBarComponent implements OnInit{
+    constructor(private userservice: UserService,public layoutService: LayoutService,private cookieService: CookieService, private router: Router) { }
+    ngOnInit(): void {
+      
+    }
 
-    items!: MenuItem[];
+    logout() {
+       console.log("log out");
+       this.userservice.log()
+     }
+   items = [
+        { label: 'log out ', icon: 'pi pi-sign-out',command: () => {
+            this.logout();}  },
+        { label: 'change compte', icon: 'pi pi-user-edit' }
+    ];
+    // items!: MenuItem[];
 
     @ViewChild('menubutton') menuButton!: ElementRef;
 
@@ -16,5 +32,5 @@ export class AppTopBarComponent {
 
     @ViewChild('topbarmenu') menu!: ElementRef;
 
-    constructor(public layoutService: LayoutService) { }
+    
 }

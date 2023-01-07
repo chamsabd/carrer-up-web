@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable,map } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { UserService } from './service/user.service';
 
@@ -20,33 +20,42 @@ export class AuthGuard implements CanActivate{
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-console.log("in");
+
+var token =this.userService.token;
+
+console.log(token);
+var v=!!token;
+console.log(v);
 
 
 
-return  this.userService.isLoggedIn$
-      .pipe(
-        tap((isLoggedIn) => {
-          console.log("ath "+isLoggedIn);
-          if (!isLoggedIn) {
-            this.router.navigateByUrl('/auth/login');
-            
 
-         
+  if(!v) {
+  
+    
+    this.router.navigateByUrl('/auth/login');
+  }
+   else{
+    
+     
+      return true;
         }
-        else{
-          if (route.data['roles'] ) {
-            // role not authorised so redirect to home page
-            this.router.navigate(['/']);
-            return false;
-        }
-        }
-       
         return false;
+       
+       
          
         
-        })
-      );
+       
+    
+// return this.userService.validate().pipe(
+//   map((data)=>{
+//   if(data){
+//       return true;
+//   }else{
+//     this.router.navigateByUrl('/auth/login');
+//     return false;
+//   }
+// }))
       
    
  }

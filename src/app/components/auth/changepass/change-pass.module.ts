@@ -8,26 +8,28 @@ import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 
+import { ChangePassRoutingModule } from "./change-pass-routing.module";
 import { UserService } from 'src/app/service/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastModule } from 'primeng/toast';
 
-import { CodeComponent } from './code.component';
-import { CodeRoutingModule } from './code-routing.module';
+import { ChangePassComponent } from './change-pass.component';
+
 @NgModule({
     imports: [
         CommonModule,
+        ToastModule,
         ButtonModule,
         CheckboxModule,
         InputTextModule,
         FormsModule,
         PasswordModule,
+        ChangePassRoutingModule,
         HttpClientModule,
         FormsModule,
-        CodeRoutingModule,
-        ToastModule,
+     
     ],
-    declarations: [CodeComponent],
+    declarations: [ChangePassComponent],
     providers: [UserService],
 })
-export class CodeModule { }
+export class ChangePassModule { }

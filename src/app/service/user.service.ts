@@ -13,21 +13,44 @@ export class UserService {
   isLoggedIn$ = this._isLoggedIn$.asObservable();
   readonly rootUrl = '/auth-server/';
   constructor(private http: HttpClient,private cookieService: CookieService, private router: Router) {
+    var v=false;
+  //   this.validate().subscribe(
+  //     {
+  //       next: (data:any) => {
+  //       console.log("data de validation "+data.toString());
+        
+  //       v= true;
+  //       console.log(v);
+  //       console.log(v);
   
- this._isLoggedIn$.next(!!this.token)
-    
-   }
-   public async  isLoggedIn(): Promise<boolean> {
-    // Check whether the user is loggedin or not
-    return this.validatetoken();
-  }
-   get token(): any {
-    this.validatetoken
+  // this._isLoggedIn$.next(v)
+  //       return true;
+      
+  //     },
+  //     error: (e) =>  {
+  //       v=false;
+  //       console.log(v);
+  
+  //       this._isLoggedIn$.next(v)
+  //       return false;
+      
+       
+        
+  //       }
+      
+  //     }
+  // )
 
-    return this.cookieService.get('token');
+ console.log(!!this.token);
+ 
+  this._isLoggedIn$.next(!!this.token)
+   }
+  
+   get token(): any { 
+    return sessionStorage.getItem('token')==null?null:atob (sessionStorage.getItem('token')!) ;
   }
   get role(): any {
-    return  this.cookieService.get('role');
+    return sessionStorage.getItem('role')==null?null:atob (sessionStorage.getItem('role')!);
   }
 
 body(user : User){
@@ -62,6 +85,7 @@ console.log(headers.get('Access-Control-Allow-Origin'));
   }
   
   saveUser(user : User){
+   
     const body:User=this.body(user);
     let headers = new HttpHeaders({
 'Access-Control-Allow-Origin':"*",
@@ -75,6 +99,39 @@ console.log(headers.get('Access-Control-Allow-Origin'));
 console.log(headers.get('Access-Control-Allow-Origin'));
 
  return   this.http.post(this.rootUrl + 'signup', body,{  observe: 'response' }); 
+   
+  }
+
+  sendcode(user:User){
+
+    const body:User=this.body(user);
+    let headers = new HttpHeaders({
+'Access-Control-Allow-Origin':"*",
+'Content-Type':'application/json',
+   });
+    
+ 
+  
+    //  headers.append("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method,"
+    //  + " Access-Control-Request-Headers,authorization");
+console.log(headers.get('Access-Control-Allow-Origin'));
+
+ return   this.http.post(this.rootUrl + '/sendcode', body,{  observe: 'response' }); 
+   
+  }
+  changepass(user : User){
+    const body:User=this.body(user);
+    let headers = new HttpHeaders({
+'Access-Control-Allow-Origin':"*",
+'Content-Type':'application/json',
+   });
+    
+ 
+  
+    //  headers.append("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method,"
+    //  + " Access-Control-Request-Headers,authorization");
+console.log(headers.get('Access-Control-Allow-Origin'));
+ return   this.http.post(this.rootUrl + '/user/'+user.username, body,{  observe: 'response' }); 
    
   }
 
@@ -100,69 +157,33 @@ console.log(headers.get('Access-Control-Allow-Origin'));
    
   }
 
-    validate(){
-     
-    var token= this.cookieService.get('token')??"";
-             console.log(token);
-             
-    let headers = new HttpHeaders({
-'Access-Control-Allow-Origin':"*",
-'Content-Type':'application/json',
-"Authorization":token
-    });
+
+log(){
+
+    sessionStorage.clear();
+    this.router.navigate(['/auth/login']);
+
+
+}
+
+  logout(){
+    this.cookieService.deleteAll();
+        this.router.navigate(['/auth/login']);
+    // this.http.get(this.rootUrl + 'log').subscribe({
+    //   next: (data:any) => {
+    //   console.log("data de validation "+data.toString());
+      
+    //     this.cookieService.deleteAll();
+    //     this.router.navigate(['/auth/login']);
+    // },
+    // error: (e) =>  {
+    //   this.cookieService.deleteAll();
     
- 
-  
-    //  headers.append("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method,"
-    //  + " Access-Control-Request-Headers,authorization");
-console.log(headers.get('Access-Control-Allow-Origin'));
-
-return this.http.get(this.rootUrl + 'api/v1/validateToken',{headers:headers})
-
-
-   
-  }
-
-  async validatetoken():Promise<boolean>{
-     
-    var token= this.cookieService.get('token')??"";
-             console.log(token);
-             
-    let headers = new HttpHeaders({
-'Access-Control-Allow-Origin':"*",
-'Content-Type':'application/json',
-"Authorization":token
-    });
+    //   this.router.navigate(['/auth/login']);
+      
+    //   }
     
- 
-  
-    //  headers.append("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method,"
-    //  + " Access-Control-Request-Headers,authorization");
-console.log(headers.get('Access-Control-Allow-Origin'));
-var value=false;
- await this.http.get(this.rootUrl + 'api/v1/validateToken',{headers:headers}).subscribe({
-  next: (data:any) => {
-  console.log(data);
-  if (data) {
-    value= true;
-  }
-  
-  return true;
-
-},
-error: (e) =>  {
-  value=false;
-  return false;
-
-
-  
-  }
-
-});
-return value
-
-
-   
+    // });
   }
 }
 

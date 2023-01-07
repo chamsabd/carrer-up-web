@@ -9,5 +9,6 @@ export class User {
    password!: String;
    confirmpassword:String| undefined;
    code:String | undefined;
+   codeverif?:String | undefined;
 
 }
