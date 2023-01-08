@@ -1,0 +1,233 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button> 
+                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+                    </div>
+                </ng-template>
+
+                
+            </p-toolbar>
+
+            <p-table #dt [value]="formations"  responsiveLayout="scroll"  [globalFilterFields]="['nom','prix','sessions.etat','category']"[rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProducts"  [rowHover]="true" dataKey="id" >
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Training Courses</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)"  placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                     
+                        <th pSortableColumn="nom">Name <p-sortIcon field="name"></p-sortIcon></th>
+                         <th pSortableColumn="prix">Price <p-sortIcon field="prix"></p-sortIcon></th>
+                        <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
+                        <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+                        <th pSortableColumn="sessions">Sessions <p-sortIcon field="sessions"></p-sortIcon></th>
+                        <th> Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body"  let-rowData let-f>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="formation"></p-tableCheckbox>
+                        </td>
+                        
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Name</span>
+                            {{f.nom}}
+                        </td>
+                       
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Price</span>
+                            {{f.prix}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Category</span>
+                            {{f.category}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Description</span>
+                            {{f.description}}
+                        </td>
+                        <td>
+                        <button type="button" pButton pRipple (click)="op2.toggle($event)" class="p-button-rounded btn-info"> show </button>
+                    </td>
+                    <p-overlayPanel #op2 [showCloseIcon]="true" [style]="{width: '450px'}">
+                        <ng-template pTemplate>
+                            <p-table [value]="f.sessions" selectionMode="single"  [paginator]="true" [rows]="5"  responsiveLayout="scroll">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="min-width:12rem" pSortableColumn="nom">Name<p-sortIcon field="nom"></p-sortIcon></th>
+                                        <th style="min-width:5rem" pSortableColumn ="dateDebut">Date debut <p-sortIcon field="dateDebut"></p-sortIcon> </th>
+                                        <th style="min-width:5rem" pSortableColumn ="dateFin">Date Fin <p-sortIcon field="dateFin"></p-sortIcon> </th>
+                                        <th style="min-width:8rem" pSortableColumn="nbrPlace">Nombre de Place <p-sortIcon field="nbrPlace"></p-sortIcon></th>
+                                        <th style="min-width:8rem" pSortableColumn="etat">Status <p-sortIcon field="Etat"></p-sortIcon></th>
+                                        <th style="min-width:8rem" >Actions </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-s>
+                                    <tr>
+                                        <td>{{s.nom}}</td>
+                                        <td>{{s.dateDebut}}</td>
+                                        <td>{{s.dateFin}}</td>
+                                        <td>{{s.nbrPlace}}</td>
+                                        <td>{{s.etat}}</td>
+                                        <td style="width:14%; min-width:8rem;">
+                    
+                                            
+                                        <div class="flex">
+                                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(f)"></button>
+                                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteSession(s)"></button>
+                                        </div>
+                                    </td>
+                                    </tr> 
+                                </ng-template>
+                            </p-table>
+                        </ng-template>
+                      </p-overlayPanel>
+                       
+                        <td style="width:14%; min-width:8rem;">
+                           
+                                <span class="p-column-title">Actions</span>
+                                
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(f)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteProduct(f)"></button>
+                                <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-info mr-2" (click)="openNewSession(f.id)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Formation Details" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content"  >   
+                <form [formGroup]="form">
+
+                 
+                 <div class="field">
+                    <label for="name">Name</label>
+                  
+                    <input type="text" formControlName="nom"  pInputText id="name" [(ngModel)]="formation.nom" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !formation.nom}"/>
+                    
+                    
+                      <small class="ng-dirty ng-invalid" *ngIf="f['nom'].errors?.['minlength']">  Name must be at least 4 characters long.</small>
+                    <small class="ng-dirty ng-invalid" *ngIf="f['nom'].touched && f['nom'].errors && f['nom'].errors['required'] && !formation.nom">Name is required.</small>
+                </div>
+                <div class="field">
+                    <label for="description">Description</label>
+                  
+                    <textarea id="description" formControlName="desc"  pInputTextarea [(ngModel)]="formation.description" required rows="3" cols="20"></textarea>
+                    <small class="ng-dirty ng-invalid" *ngIf="f['desc'].errors?.['minlength']">  Description must be at least 4 characters long.</small>
+                    <small class="ng-dirty ng-invalid" *ngIf="f['desc'].touched && f['desc'].errors && f['desc'].errors['required']">Description is required.</small>
+                </div>
+                <div class="field">
+                    <label for="name">Category</label>
+                    <input type="text" pInputText id="name" formControlName="category" [(ngModel)]="formation.category" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !formation.nom}"/>
+                 
+                    <small class="ng-dirty ng-invalid" *ngIf="f['category'].errors?.['minlength']">  Category must be at least 4 characters long.</small>
+                    <small class="ng-dirty ng-invalid" *ngIf="f['nom'].touched && f['category'].errors && f['category'].errors['required']">Category is required.</small>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="price">Price</label>
+                        <p-inputNumber id="price" formControlName="prix" [(ngModel)]="formation.prix"  locale="en-Dt"></p-inputNumber>
+
+                    </div>
+                
+                </div>
+                </form>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteProductDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="formation">Are you sure you want to delete <b>{{formation.nom}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProductDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+       
+        <p-dialog [(visible)]="sessionDialog" [style]="{width: '450px'}" header="Session Details" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content"  >   
+                <form [formGroup]="form1">
+                 
+                 <div class="field">
+                    <label for="name"> Session Name</label>
+                  
+                    <input type="text" formControlName="nom"  pInputText id="name" [(ngModel)]="sessionf.nom" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !sessionf.nom}"/>
+                    
+                    
+                      <small class="ng-dirty ng-invalid" *ngIf="f['nom'].errors?.['minlength']">  Name must be at least 4 characters long.</small>
+                    <small class="ng-dirty ng-invalid" *ngIf="f['nom'].touched && f['nom'].errors && f['nom'].errors['required'] && !formation.nom">Name is required.</small>
+                </div>
+                <div class="field">
+                    <label for="description"> Start Date </label>
+
+                    <input type="text" pInputText id="name" formControlName="dateDebut" [(ngModel)]="sessionf.dateDebut" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !sessionf.dateDebut}"/>
+
+                </div>
+
+           
+                <div class="field">
+                    <label for="name">Finish Date</label>
+                    <input type="text" pInputText id="name" formControlName="dateFin" [(ngModel)]="sessionf.dateFin" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !sessionf.dateFin}"/>
+                </div>
+                <div class="field">
+                    <label for="name">Status (Open or closed )</label>
+                    <input type="text" pInputText id="name" formControlName="etat" [(ngModel)]="sessionf.etat" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !sessionf.etat}"/>
+                </div>
+                 <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="price">Places Number</label>
+                        <p-inputNumber id="price" formControlName="nbrPlace" [(ngModel)]="sessionf.nbrPlace"  locale="en-Dt"></p-inputNumber>
+
+                    </div>
+                   
+                </div>
+              
+                </form>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveSession()"></button>
+            </ng-template>
+        </p-dialog>
+
+        
+        <p-dialog [(visible)]="deleteSessionDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="formation">Are you sure you want to delete <b>{{sessionf.nom}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProductDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSession()"></button>
+            </ng-template>
+        </p-dialog>
+
+    </div>
+</div>
+

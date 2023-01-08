@@ -17,12 +17,35 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Home',
                 items: [
-                    { label: 'auth', icon: 'pi pi-fw pi-home', routerLink: ['/auth/signup'] },
+                   
+
                     { label: 'stage', icon: 'pi pi-fw pi-home', routerLink: ['/stage'] },
-                    { label: 'formation', icon: 'pi pi-fw pi-home', routerLink: ['/stage'] },
+
+
+                    { label: 'Training Demand', icon: 'pi pi-fw pi-hourglass',routerLink: ['/demandes']},
+                    { label: 'Registered', icon: 'pi pi-fw pi-verified',routerLink: ['/demandes/inscrit']},
+
+                    { label: 'Courses  Training',icon:'pi pi-fw pi-home' ,routerLink: ['/courses/formations']},
+                    {label :"espace Admin "}
+                    
+                ],
+                
+                
+            },
+            {
+                label: ' Admin Space',
+                icon: 'pi pi-fw pi-user',
+                items: [
+                    {
+                        label: 'Available Courses',
+                        icon: 'pi pi-fw pi-bookmark',
+                        routerLink: ['/admin/courses']
+                    }
+                    
+
 
                 ]
-            }
+            },
         ];
     }
 }
