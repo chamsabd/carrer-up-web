@@ -71,7 +71,7 @@ export class FormationsListesComponent {
       'dateFin': new FormControl(null, [Validators.required]),
       'etat': new FormControl(null, [Validators.required,]),
       'nbrPlace': new FormControl(null, [Validators.required]),
-      'formation_id':new FormControl(null),
+     
     })
 }
     openNew() {
@@ -91,10 +91,10 @@ export class FormationsListesComponent {
         this.addfService.addPerson(this.formation)
             .subscribe(data => {
               console.log(data)
-              //this.refreshPeople();
+              this.formationServices.getData()
 
             })  
-            window.location.reload()        
+                   
       }
       deleteSelectedProducts() {
         this.deleteProductsDialog = true;
@@ -106,7 +106,7 @@ export class FormationsListesComponent {
         this.productDialog = true;
         this.fservice.editDataFormation(formation.id, this.formation);
         console.log(this.formation);
-        window.location.reload()    
+        this.formationServices.getData()
       }
 
       deleteProduct(formation: Formation) {
@@ -128,7 +128,7 @@ export class FormationsListesComponent {
         this.fservice.deleteDataFormation(this.formation.id).subscribe(res => {
           this.formations = this.formations.filter(item => item.id !== this.formation.id)});
           console.log('Post deleted successfully!');
-          window.location.reload()    
+         
       };
 
 
@@ -215,7 +215,9 @@ export class FormationsListesComponent {
         this.sessionsService.addData(this.sessionf)
         .subscribe(data => {
           console.log(data)         
-        })   
-        window.location.reload()    
+        })
+           
+          
       }
+    
 }
