@@ -9,6 +9,7 @@ import {saveAs} from "file-saver";
 
 import {ConfirmationService,  MessageService } from 'primeng/api';
 import { DatePipe } from '@angular/common';
+import { UserService } from 'src/app/service/user.service';
 @Component({
     selector: 'app-afficher',
     templateUrl: './afficher.component.html',
@@ -22,10 +23,14 @@ export class AfficherComponent implements OnInit {
     mindate:any= new Date();
   
    
-    constructor(private stageservice: StageService,private messageService:MessageService, private confirmationService:ConfirmationService) {
+    constructor(private userService: UserService,private stageservice: StageService,private messageService:MessageService, private confirmationService:ConfirmationService) {
       
      }
+     role:String="";
     ngOnInit() {
+        this.role = this.userService.role;
+        console.log(this.role);
+        
         console.log(typeof(this.mindate));
         this.getstages();
   

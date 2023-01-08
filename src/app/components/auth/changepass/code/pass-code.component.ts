@@ -22,47 +22,28 @@ export class PassCodeComponent {
     prenom: '',
     roles:[],
     code:'',
-    codeverif:''
+    codeverif:'',
+    id: undefined
   };
   
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   constructor(private router: Router,private activatedRoute: ActivatedRoute,public layoutService: LayoutService,private userService: UserService,
   private messageService:  MessageService) {
-     this.userService.sendcode(this.user).subscribe({
-      next: (data:any) => {
+    if (this.router.getCurrentNavigation()?.extras.state) {
+     var routeState = this.router.getCurrentNavigation()?.extras.state;
+      if (routeState) {
+        this.user = routeState['user']
+          ? JSON.parse(routeState['user'])
+          : '';
        
-          console.log(data);
-          
-         // form.value.code=this.user.codeverif;
-          if (data.status== 200) {
-            this.user.code=data.body.message
-           
-  
-           
-       
-          }
-          else{
-            
-          
-            this.messageService.add({ severity: 'error', summary: 'erreur', detail: data.body.message });
-        
-         
-        }
-     
-          
-            
-        
-   
-
-    },
-    error: (e) =>  {
-        console.log(e)
-        
-        this.messageService.add({ severity: 'error', summary: 'erreur', detail: e.error.message });
-        
-        }
       }
-    )
+    }
+    console.log(this.user);
+    if (this.user.email=="") {
+      this.router.navigate(['/auth/changepass',
+              ])
+      
+    }
       
     }
 
@@ -75,43 +56,17 @@ export class PassCodeComponent {
       console.log(form.value);
       this.user.code=form.value.codeverif;
      
-      this.userService.saveUser(this.user)
-        .subscribe(
-          {
-            next: (data:any) => {
-             
-                console.log(data);
-               // form.value.code=this.user.codeverif;
-                if (data.status== 200) {
-                  this.user=this.userService.body(form.value)
-                 
-        
-                  this.router.navigate(['/auth/login'
-                 
-                ]​);
-               this.resetForm(form);
-                }
-                else{
+  
+     
+              
+               this.router.navigate(['/auth/passchange',
+              ],  {
+                state: {
+                  user: JSON.stringify(this.user),
                   
-                
-                  this.messageService.add({ severity: 'error', summary: 'erreur', detail: data.body.message });
-              
-               
-              }
-           
-                
-                  
-              
-         
-    
-          },
-          error: (e) =>  {
-              console.log(e)
-              
-              this.messageService.add({ severity: 'error', summary: 'erreur', detail: e.error.message });
-              
-              }
-            }
+                },
+              }​);
+              this.resetForm(form);
           
           
           
@@ -122,6 +77,6 @@ export class PassCodeComponent {
           
           
           
-         );
+      
     }
 }

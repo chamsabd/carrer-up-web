@@ -15,6 +15,7 @@ import { RolesGuard } from './roles.guard';
                 children: [
                  
                     { path: 'stage',loadChildren: () => import('./components/stage/stage.module').then(m => m.StageModule) },
+                    { path: 'user',loadChildren: () => import('./components/users/user.module').then(m => m.UserModule) },
             ]     
             },
             { path: 'auth', loadChildren: () => import('./components/auth/auth.module').then(m => m.AuthModule)},

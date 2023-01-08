@@ -55,14 +55,15 @@ export class UserService {
 
 body(user : User){
   const body: User = {
-    confirmpassword:user.confirmpassword,
+    confirmpassword: user.confirmpassword,
     password: user.password,
     email: user.email,
     username: user.username,
     nom: user.nom,
-    roles:user.roles,
+    roles: user.roles,
     prenom: user.prenom,
-    code:user.code
+    code: user.code,
+    id: undefined
   }
   return body;
 }
@@ -102,6 +103,27 @@ console.log(headers.get('Access-Control-Allow-Origin'));
    
   }
 
+  updateUser(user : User){
+   
+    const body:User=this.body(user);
+    let headers = new HttpHeaders({
+'Access-Control-Allow-Origin':"*",
+'Content-Type':'application/json',
+   });
+
+ return   this.http.put(this.rootUrl + 'user', body,{  observe: 'response' });  
+  }
+ getUsers(){
+   
+    
+    let headers = new HttpHeaders({
+'Access-Control-Allow-Origin':"*",
+'Content-Type':'application/json',
+   });
+
+ return   this.http.get(this.rootUrl + 'user', {  observe: 'response' });  
+  }
+
   sendcode(user:User){
 
     const body:User=this.body(user);
@@ -109,14 +131,9 @@ console.log(headers.get('Access-Control-Allow-Origin'));
 'Access-Control-Allow-Origin':"*",
 'Content-Type':'application/json',
    });
-    
- 
-  
-    //  headers.append("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method,"
-    //  + " Access-Control-Request-Headers,authorization");
 console.log(headers.get('Access-Control-Allow-Origin'));
 
- return   this.http.post(this.rootUrl + '/sendcode', body,{  observe: 'response' }); 
+ return   this.http.post(this.rootUrl + 'sendcode', body,{  observe: 'response' }); 
    
   }
   changepass(user : User){
@@ -131,7 +148,7 @@ console.log(headers.get('Access-Control-Allow-Origin'));
     //  headers.append("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method,"
     //  + " Access-Control-Request-Headers,authorization");
 console.log(headers.get('Access-Control-Allow-Origin'));
- return   this.http.post(this.rootUrl + '/user/'+user.username, body,{  observe: 'response' }); 
+ return   this.http.put(this.rootUrl + "changepass", body,{  observe: 'response' }); 
    
   }
 

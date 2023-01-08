@@ -9,10 +9,10 @@ import {ConfirmationService,  MessageService } from 'primeng/api';
 import { JsonPipe } from '@angular/common';
 @Component({
   selector: 'app-code',
-  templateUrl: './code.component.html',
+  templateUrl: './pass-change.component.html',
   providers: [ConfirmationService, MessageService]
 })
-export class CodeComponent {
+export class PassChangeComponent {
   user:User ={
     confirmpassword:'',
     password: '',
@@ -30,10 +30,24 @@ export class CodeComponent {
   constructor(private router: Router,private activatedRoute: ActivatedRoute,public layoutService: LayoutService,private userService: UserService,
   private messageService:  MessageService) {
 
-      this.user = JSON.parse(localStorage.getItem("user")!!);
-    localStorage.clear();
-    
-      console.log(this.user);
+
+    if (this.router.getCurrentNavigation()?.extras.state) {
+     var routeState = this.router.getCurrentNavigation()?.extras.state;
+     console.log(routeState);
+     
+      if (routeState) {
+        this.user = routeState['user']
+          ? JSON.parse(routeState['user'])
+          : '';
+       
+      }
+    }
+    console.log(this.user);
+    if (this.user.email=='') {
+      this.router.navigate(['/auth/changepass',
+              ])
+      
+    }
       
     }
 
@@ -43,46 +57,32 @@ export class CodeComponent {
       this.user = new User()
     }
     OnSubmit(form: NgForm) {
-      console.log(form.value);
-      this.user.code=form.value.codeverif;
-     
-      this.userService.saveUser(this.user)
-        .subscribe(
-          {
-            next: (data:any) => {
-             
-                console.log(data);
-               // form.value.code=this.user.codeverif;
-                if (data.status== 200) {
-                  this.user=this.userService.body(form.value)
-                 
-        
-                  this.router.navigate(['/auth/login'
-                 
-                ]​);
-               this.resetForm(form);
-                }
-                else{
-                  
-                
-                  this.messageService.add({ severity: 'error', summary: 'erreur', detail: data.body.message });
-              
-               
-              }
-           
-                
-                  
-              
-         
-    
-          },
-          error: (e) =>  {
-              console.log(e)
-              
-              this.messageService.add({ severity: 'error', summary: 'erreur', detail: e.error.message });
-              
-              }
+      console.log(this.user);
+      this.userService.changepass(this.user)
+      .subscribe({
+        next: (data:any) => {
+          
+            console.log(data);
+            
+            if (data.status== 200) {
+            
+              this.router.navigate(['/auth/login',
+             ],​);
+          this.resetForm(form);
             }
+            else{
+              this.messageService.add({ severity: 'error', summary: 'erreur', detail: data.body.message });
+          
+            }
+              
+      },
+      error: (e) =>  {
+          console.log(e)
+          this.messageService.add({ severity: 'error', summary: 'erreur', detail: e.error.message });
+          this.router.navigate(['/auth/changepass',
+        ])
+          }
+        });
           
           
           
@@ -93,6 +93,6 @@ export class CodeComponent {
           
           
           
-         );
+      
     }
 }

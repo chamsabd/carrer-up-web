@@ -10,8 +10,9 @@ import { AuthGuard } from 'src/app/auth-guard.guard';
         { path: 'login',  loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
         { path: 'signup', loadChildren: () => import('./sign-up/sign-up.module').then(m => m.SignUpModule) },
         { path: 'code', loadChildren: () => import('./sign-up/code/code.module').then(m => m.CodeModule) },
-        { path: 'changepass', loadChildren: () => import('./changepass/code/pass-code.module').then(m => m.PassCodeModule) },
-        { path: 'passcode', loadChildren: () => import('./changepass/change-pass.module').then(m => m.ChangePassModule) },
+        { path: 'passcode', loadChildren: () => import('./changepass/code/pass-code.module').then(m => m.PassCodeModule) },
+        { path: 'changepass', loadChildren: () => import('./changepass/change-pass.module').then(m => m.ChangePassModule) },
+        { path: 'passchange', loadChildren: () => import('./changepass/passchange/pass-change.module').then(m => m.PassChangeModule) },
        
         { path: '**', redirectTo: '/notfound' }
     ])],

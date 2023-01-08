@@ -23,7 +23,8 @@ export class ChangePassComponent implements OnInit {
     prenom: '',
     roles:[],
     code:'',
-    codeverif:''
+    codeverif:'',
+    id: undefined
   };
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   
@@ -45,12 +46,13 @@ export class ChangePassComponent implements OnInit {
       prenom: '',
       roles:[],
       code:'',
-      codeverif:''
+      codeverif:'',
+      id: undefined
     }
   }
 
   OnSubmit(form: NgForm) { 
-   this.userService.registerUser(form.value)
+   this.userService.sendcode(form.value)
       .subscribe({
         next: (data:any) => {
           
@@ -60,10 +62,13 @@ export class ChangePassComponent implements OnInit {
               
               form.value.code=data.body.message;
             this.user=this.userService.body(form.value)
-    localStorage.setItem("user",JSON.stringify( this.user));
               this.router.navigate(['/auth/passcode',
-             
-            ]​);
+             ], {
+              state: {
+                user: JSON.stringify(this.user),
+                
+              },
+            }​);
           this.resetForm(form);
             }
             else{

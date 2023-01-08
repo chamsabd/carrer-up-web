@@ -15,15 +15,16 @@ export class SignUpComponent implements OnInit {
 
   
   user: User ={
-    confirmpassword:'',
+    confirmpassword: '',
     password: '',
-    username:'',
+    username: '',
     email: '',
     nom: '',
     prenom: '',
-    roles:[],
-    code:'',
-    codeverif:''
+    roles: [],
+    code: '',
+    codeverif: '',
+    id: undefined
   };
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   
@@ -45,7 +46,8 @@ export class SignUpComponent implements OnInit {
       prenom: '',
       roles:[],
       code:'',
-      codeverif:''
+      codeverif:'',
+      id: undefined
     }
   }
 

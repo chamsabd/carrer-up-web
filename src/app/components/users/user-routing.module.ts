@@ -6,9 +6,9 @@ import { AfficherModule } from './afficher/afficher.module';
 @NgModule({
     imports: [RouterModule.forChild([
      
-        { path: '',canActivate: [RolesGuard],  data: { roles: ["ROLE_USER","ROLE_ADMIN"] }, loadChildren: () => import('./afficher/afficher.module').then(m => m.AfficherModule )   },
+        { path: '',canActivate: [RolesGuard],  data: { roles: ["ROLE_ADMIN"] }, loadChildren: () => import('./afficher/afficher.module').then(m => m.AfficherModule )   },
         { path: '**', redirectTo: '/notfound' }
     ])],
     exports: [RouterModule]
 })
-export class StageRoutingModule { }
+export class UserRoutingModule { }
