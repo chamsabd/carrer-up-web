@@ -9,7 +9,7 @@ import { Formation } from '../api/formation.model';
 export class FormationsService {
 
   constructor( private http: HttpClient,) { }
-  public localUrl = '/FORMATION-SERVER/formations';
+  public localUrl = '/formation-server/formations';
   getData() {
     return this.http.get(this.localUrl);
   }

@@ -51,7 +51,8 @@ export class AddFormationComponent {
       .subscribe(data => {
         console.log(data)
         //this.refreshPeople();
-      })      
+      });
+      window.location.reload()      
   }
  
   ///[disabled]="serviceForm.invalid"

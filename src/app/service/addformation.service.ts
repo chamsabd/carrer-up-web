@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class AddformationService {
 
   constructor(private http: HttpClient) { }
-  public localUrl = '/FORMATION-SERVER/formations';
+  public localUrl = '/formation-server/formations';
 
   addPerson(f:Formation): Observable<any> {
     const headers = { 'content-type': 'application/json'}  

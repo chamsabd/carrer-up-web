@@ -92,7 +92,9 @@ export class FormationsListesComponent {
             .subscribe(data => {
               console.log(data)
               //this.refreshPeople();
-            })      
+
+            })  
+            window.location.reload()        
       }
       deleteSelectedProducts() {
         this.deleteProductsDialog = true;
@@ -104,6 +106,7 @@ export class FormationsListesComponent {
         this.productDialog = true;
         this.fservice.editDataFormation(formation.id, this.formation);
         console.log(this.formation);
+        window.location.reload()    
       }
 
       deleteProduct(formation: Formation) {
@@ -125,6 +128,7 @@ export class FormationsListesComponent {
         this.fservice.deleteDataFormation(this.formation.id).subscribe(res => {
           this.formations = this.formations.filter(item => item.id !== this.formation.id)});
           console.log('Post deleted successfully!');
+          window.location.reload()    
       };
 
 
@@ -212,5 +216,6 @@ export class FormationsListesComponent {
         .subscribe(data => {
           console.log(data)         
         })   
+        window.location.reload()    
       }
 }
