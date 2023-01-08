@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -9,25 +9,30 @@ import { environment } from 'src/environments/environment';
 export class DemandeService {
 
   b_url = environment.server
-   rootUrl = '/INSCRIT-SERVICE/inscrit';
-  rootUrl1 = '/FORMATION-SERVER/formations';
-  rootUrl2 = '/INSCRIT-SERVICE/inscrit/';
+   rootUrl = '/inscrit';
+  rootUrl1 = '/formation-server/formations';
+  rootUrl2 = '/inscrit-service/inscrit/';
+  public token = localStorage.getItem("_token")
+  public headers = new HttpHeaders({
+    'Access-Control-Allow-Origin':"*",
+    'Content-Type':'application/json',
+    "Authorization": `Bearer ${this.token}`
+  })
    constructor(private http: HttpClient) { }
 
    getAllDemande(){
-      
-       return this.http.get(this.rootUrl);         
+       return this.http.get("/api"+this.rootUrl, {headers: this.headers});         
    }
 
    getAllFormation(){
-           return this.http.get(this.rootUrl1);         
+      return this.http.get(this.rootUrl1, {headers: this.headers});         
    }
 
    acceptInscription(id: any){
-    return this.http.put(`${this.b_url}/inscrit/accept`, {id: id})
+    return this.http.put(`${this.b_url}/inscrit/accept`, {id: id}, {headers: this.headers})
    }
    refuseInscription(id: any){
-    return this.http.put(`${this.b_url}/inscrit/refuse`, {id: id})
+    return this.http.put(`${this.b_url}/inscrit/refuse`, {id: id}, {headers: this.headers})
    }
 
    

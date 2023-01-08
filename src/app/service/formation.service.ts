@@ -9,20 +9,15 @@ import { Formation } from '../api/formation.model';
 export class FormationsService {
 
   constructor( private http: HttpClient,) { }
-  public localUrl = '/FORMATION-SERVER/formations';
+  public localUrl = '/formation-server/formations';
   public token = localStorage.getItem("_token")
+  public headers = new HttpHeaders({
+    'Access-Control-Allow-Origin':"*",
+    'Content-Type':'application/json',
+    "Authorization": `Bearer ${this.token}`
+  })
   getData() {
-    let token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYWZhZGhhb3VhZGkzMTkiLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlzcyI6Ii9zaWduaW4iLCJleHAiOjE2NzMxNzAwODh9.32AnH0QgX1VWINd31Ta5oxSTltHTnAdKsUzKbMJiErM"
-      let headers = new HttpHeaders({
-
-        'Access-Control-Allow-Origin':"*",
-        
-        'Content-Type':'application/json',
-        
-        "Authorization": token
-        
-            })
-    return this.http.get(this.localUrl+'signin',{headers:headers});
+    return this.http.get(this.localUrl+'',{headers: this.headers});
   }
   deleteDataFormation(id:number){
     
