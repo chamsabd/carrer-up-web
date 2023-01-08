@@ -30,4 +30,9 @@ export class DemandeService {
     return this.http.put(`${this.b_url}/inscrit/refuse`, {id: id})
    }
 
+   
+   sendDemand(idSession: any) {
+    return this.http.post(`${this.b_url}/inscrit`, {idSession: idSession})
+   }
+
 }

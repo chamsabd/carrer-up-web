@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { Formation } from 'src/app/api/formation.model';
 import { AddformationService } from 'src/app/service/addformation.service';
+import { DemandeService } from 'src/app/service/demande.service';
 import { FormationsService } from 'src/app/service/formation.service';
 interface expandedRows {
   [key: string]: boolean;
@@ -17,7 +18,10 @@ export class FormationComponent {
   expandedRows: expandedRows = {};
   isExpanded: boolean = false;
   @ViewChild('filter') filter!: ElementRef;
-  constructor(private formationServices:FormationsService ) { }
+  constructor(
+    private formationServices:FormationsService,
+    private demservice: DemandeService
+  ) { }
  
   ngOnInit(): void {
     this.formationServices.getData().subscribe((response:any) => {
@@ -37,13 +41,22 @@ clear(table: Table) {
   table.clear();
   this.filter.nativeElement.value = '';
 }
-expandAll() {
-  if (!this.isExpanded) {
-      this.formations.forEach(f => f && f.id ? this.expandedRows[f.id] = true : '');
+  expandAll() {
+    if (!this.isExpanded) {
+        this.formations.forEach(f => f && f.id ? this.expandedRows[f.id] = true : '');
 
-  } else {
-      this.expandedRows = {};
+    } else {
+        this.expandedRows = {};
+    }
+    this.isExpanded = !this.isExpanded;
   }
-  this.isExpanded = !this.isExpanded;
-}
+  sendDemande(idSession: any){
+    this.demservice.sendDemand(idSession).subscribe(
+      (res)=>{
+        console.log(res)
+      }, (err)=>{
+        console.log(err)
+      }
+    )
+  }
 }
