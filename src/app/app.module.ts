@@ -5,6 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 
+import { UserService } from './service/user.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './JwtInterceptor';
+import { ErrorInterceptor } from './ErrorInterceptor';
+
+
 import { BrowserModule } from '@angular/platform-browser';
 import { DemandeComponent } from './components/demandes/demande/demande.component';
 import { InputTextModule } from 'primeng/inputtext';
@@ -18,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormationComponent } from './components/formations/formation/formation.component';
 import { AddFormationComponent } from './components/formations/add-formation/add-formation.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+
 
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { FormationsListesComponent } from './components/formations/admin/formations-listes/formations-listes.component';
@@ -76,8 +83,10 @@ import { DropdownModule } from 'primeng/dropdown';
   
 
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
-       
+        { provide: LocationStrategy, useClass: HashLocationStrategy },UserService
+       ,
+            { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+            { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     ],
     bootstrap: [AppComponent]
 })

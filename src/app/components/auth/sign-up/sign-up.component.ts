@@ -4,19 +4,31 @@ import { NgForm } from '@angular/forms';
 import { UserService } from '../../../service/user.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { Router, ROUTES } from '@angular/router';
-
+import {ConfirmationService,  MessageService } from 'primeng/api';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
- 
+  providers: [ConfirmationService, MessageService]
+
 })
 export class SignUpComponent implements OnInit {
 
   
-  user: User =new User();
+  user: User ={
+    confirmpassword: '',
+    password: '',
+    username: '',
+    email: '',
+    nom: '',
+    prenom: '',
+    roles: [],
+    code: '',
+    codeverif: '',
+    id: undefined
+  };
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
-
-  constructor(private router: Router,public layoutService: LayoutService,private userService: UserService) { }
+  
+  constructor(private router: Router,public layoutService: LayoutService,private userService: UserService,private messageService:MessageService) { }
 
   ngOnInit() {
     this.resetForm();
@@ -28,39 +40,50 @@ export class SignUpComponent implements OnInit {
     this.user = {
       confirmpassword:'',
       password: '',
+      username:'',
       email: '',
       nom: '',
       prenom: '',
-      roles:["user"],
-      code:''
+      roles:[],
+      code:'',
+      codeverif:'',
+      id: undefined
     }
   }
 
-  OnSubmit(form: NgForm) {
-    form.value.roles=["user"];
-    
+  OnSubmit(form: NgForm) { 
    this.userService.registerUser(form.value)
-      .subscribe((data: any) => {
-        console.log(data);
-        
-        if (data.status== 200) {
+      .subscribe({
+        next: (data:any) => {
           
-          form.value.code=data.body.message;
-        this.user=this.userService.body(form.value)
-console.log(JSON.stringify( this.user));
+            console.log(data);
+            
+            if (data.status== 200) {
+              
+              form.value.code=data.body.message;
+            this.user=this.userService.body(form.value)
+    localStorage.setItem("user",JSON.stringify( this.user));
+              this.router.navigate(['/auth/code',
+             
+            ]​);
+          this.resetForm(form);
+            }
+            else{
+              this.messageService.add({ severity: 'error', summary: 'erreur', detail: data.body.message });
+          
+            }
+              
+          
+     
 
-console.log(this.router);
-localStorage.setItem("user",JSON.stringify( this.user));
-          this.router.navigate(['/auth/code',
-         
-        ]​);
-      this.resetForm(form);
-        }
-        else{
+      },
+      error: (e) =>  {
+          console.log(e)
           
-        }
+          this.messageService.add({ severity: 'error', summary: 'erreur', detail: e.error.message });
           
-      });
+          }
+        });
   }
 
 }
