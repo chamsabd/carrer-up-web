@@ -55,7 +55,7 @@ export class FormationsListesComponent {
 
   
   ngOnInit(): void {
-    this.formationServices.getData().subscribe((response:any) => {
+    this.fservice.getData().subscribe((response:any) => {
       this.formations = response["content"];
       console.log(this.formations);
      });
@@ -71,7 +71,7 @@ export class FormationsListesComponent {
       'dateFin': new FormControl(null, [Validators.required]),
       'etat': new FormControl(null, [Validators.required,]),
       'nbrPlace': new FormControl(null, [Validators.required]),
-      'formation_id':new FormControl(null),
+     
     })
 }
     openNew() {
@@ -91,8 +91,10 @@ export class FormationsListesComponent {
         this.addfService.addPerson(this.formation)
             .subscribe(data => {
               console.log(data)
-              //this.refreshPeople();
-            })      
+              this.fservice.getData()
+
+            })  
+                   
       }
       deleteSelectedProducts() {
         this.deleteProductsDialog = true;
@@ -104,6 +106,7 @@ export class FormationsListesComponent {
         this.productDialog = true;
         this.fservice.editDataFormation(formation.id, this.formation);
         console.log(this.formation);
+        this.fservice.getData()
       }
 
       deleteProduct(formation: Formation) {
@@ -125,6 +128,7 @@ export class FormationsListesComponent {
         this.fservice.deleteDataFormation(this.formation.id).subscribe(res => {
           this.formations = this.formations.filter(item => item.id !== this.formation.id)});
           console.log('Post deleted successfully!');
+         
       };
 
 
@@ -164,6 +168,7 @@ export class FormationsListesComponent {
             category: undefined,
             prix: undefined,
             sessions: []};
+            this.refreshFormations();
           
       }
 
@@ -210,7 +215,18 @@ export class FormationsListesComponent {
         console.log(this.f_id);
         this.sessionsService.addData(this.sessionf)
         .subscribe(data => {
-          console.log(data)         
-        })   
+          console.log(data) ;
+          this.refreshFormations();        
+        })
+
+          
       }
+      refreshFormations() {
+  
+        this.fservice.getData().subscribe((res: any) => {
+          
+            this.formations = res;
+        });
+    }
+    
 }

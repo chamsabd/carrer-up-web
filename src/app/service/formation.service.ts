@@ -10,12 +10,14 @@ export class FormationsService {
 
   constructor( private http: HttpClient,) { }
   public localUrl = '/formation-server/formations';
+
   public token = localStorage.getItem("_token")
   public headers = new HttpHeaders({
     'Access-Control-Allow-Origin':"*",
     'Content-Type':'application/json',
     "Authorization": `Bearer ${this.token}`
   })
+
   getData() {
     return this.http.get(this.localUrl+'',{headers: this.headers});
   }

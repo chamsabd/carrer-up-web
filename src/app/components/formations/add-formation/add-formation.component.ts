@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Formation } from 'src/app/api/formation.model';
 import { AddformationService } from 'src/app/service/addformation.service';
+import { FormationsService } from 'src/app/service/formation.service';
 
 @Component({
   selector: 'app-add-formation',
@@ -9,7 +10,7 @@ import { AddformationService } from 'src/app/service/addformation.service';
   styleUrls: ['./add-formation.component.scss']
 })
 export class AddFormationComponent {
-  constructor(private addfService:AddformationService) {}
+  constructor(private addfService:AddformationService,private fservice :FormationsService) {}
  
   formation:Formation={
    id: 0,
@@ -18,11 +19,11 @@ export class AddFormationComponent {
    category: undefined,
    prix: undefined,
    sessions: []
+   
  };
  form!: FormGroup;
-
+ formations!: Formation[]; 
   ngOnInit() {
-    //this.refreshPeople()
     this.form = new FormGroup({
       'nom': new FormControl(null, [Validators.required, Validators.minLength(4)]),
       'category': new FormControl(null, [Validators.required,Validators.minLength(4)]),
@@ -32,28 +33,42 @@ export class AddFormationComponent {
   }
  
   
-  /*refreshPeople() {
-    this.addfService.getformation
-      .subscribe((data: any) => {
-        console.log(data)
-        this.formation=data;
-      })      
- 
+  refreshFormations() {
+  
+      this.fservice.getData().subscribe((res: any) => {
+        
+          this.formations = res;
+      });
   }
-  */
+    
+ 
+  
+  
   get f(){
     return this.form.controls;
     }
  
   OnSubmit() {
    
-   this.addfService.addPerson(this.formation)
-      .subscribe(data => {
-        console.log(data)
-        //this.refreshPeople();
-      })      
-  }
+    this.addfService.addPerson(this.formation)
+    .subscribe(data => {
+      console.log(data)
+      this.refreshFormations();
+      this.reset();
+    });
+   
+}
+reset() {
+  this.formation = {
+      
+    id: 0,
+    nom: "",
+    description: "",
+    category: "",
+    prix: undefined,
+    sessions: []
+  };
  
-  ///[disabled]="serviceForm.invalid"
   
+}
 }
