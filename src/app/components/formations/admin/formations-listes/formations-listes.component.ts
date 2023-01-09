@@ -18,7 +18,7 @@ export class FormationsListesComponent {
   submitted: boolean = false;
   productDialog: boolean = false;
   sessionDialog :boolean =false;
-  deleteProductDialog: boolean = false;
+  deleteFormationDialog: boolean = false;
   deleteSessionDialog: boolean = false;
   sessionf:Session={
     id: 0,
@@ -32,7 +32,7 @@ export class FormationsListesComponent {
   };
 
   f_id:number = 0;
-  deleteProductsDialog: boolean = false;
+  deleteFormationsDialog: boolean = false;
   selectedProducts: Formation[] = [];
   selectedsessions: Formation[] = [];
   sessions:Session[]=[];
@@ -97,11 +97,11 @@ export class FormationsListesComponent {
                    
       }
       deleteSelectedProducts() {
-        this.deleteProductsDialog = true;
+        this.deleteFormationsDialog = true;
 
       }
 
-      editProduct(formation: Formation) {
+      editFormation(formation: Formation) {
         this.formation = { ...formation };
         this.productDialog = true;
         this.fservice.editDataFormation(formation.id, this.formation);
@@ -109,20 +109,20 @@ export class FormationsListesComponent {
         this.fservice.getData()
       }
 
-      deleteProduct(formation: Formation) {
-        this.deleteProductDialog = true;
+      deleteFormation(formation: Formation) {
+        this.deleteFormationDialog = true;
         this.formation = { ...formation };
       }
 
       confirmDeleteSelected() {
-        this.deleteProductsDialog = false;
+        this.deleteFormationsDialog = false;
         this.formations = this.formations.filter(val => !this.selectedProducts.includes(val));
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
         this.selectedProducts = [];
       }
 
       confirmDelete() {
-        this.deleteProductDialog = false;
+        this.deleteFormationDialog = false;
         this.formations = this.formations.filter(val => val.id !== this.formation.id);
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
         this.fservice.deleteDataFormation(this.formation.id).subscribe(res => {

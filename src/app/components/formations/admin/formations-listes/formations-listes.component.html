@@ -183,16 +183,36 @@
                     <small class="ng-dirty ng-invalid" *ngIf="f['nom'].touched && f['nom'].errors && f['nom'].errors['required'] && !formation.nom">Name is required.</small>
                 </div>
                 <div class="field">
-                    <label for="description"> Start Date </label>
 
                     <input type="text" pInputText id="name" formControlName="dateDebut" [(ngModel)]="sessionf.dateDebut" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !sessionf.dateDebut}"/>
+                    <div class="field col-12 md:col-6">
+                        <label htmlFor="lastname2">Start Date  </label>
 
+                        <p-calendar dateFormat="yy-mm-dd" [showIcon]="true" [required]="true" #datedebut="ngModel"
+											name="dateDebut" [minDate]="mindate" [maxDate]="sessionf.dateDebut"
+											[(ngModel)]="sessionf" inputId="icon"></p-calendar>
+										<div *ngIf="sessionf.dateDebut.invalid && .(sessionf.dateDebut.dirty || sessionf.dateDebut.touched)"
+											class="alert">
+											<div *ngIf="sessionf.dateDebut.errors?.['required']">
+												date is required.
+											</div>
+                        </div>
+                    </div>
                 </div>
 
            
-                <div class="field">
-                    <label for="name">Finish Date</label>
-                    <input type="text" pInputText id="name" formControlName="dateFin" [(ngModel)]="sessionf.dateFin" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !sessionf.dateFin}"/>
+                <div class="field col-12 md:col-6">
+                    <label htmlFor="lastname2">date fin </label>
+
+                    <p-calendar dateFormat="yy-mm-dd" [showIcon]="true" #dateFin="ngModel" [required]="true"
+                        name="dateFin" [minDate]="sessionf.dateFin!" [(ngModel)]="sessionf.dateFin"
+                        inputId="icon"></p-calendar>
+                    <div *ngIf="dateFin.invalid && (dateFin.dirty || dateFin.touched)"
+                        class="alert">
+                        <div *ngIf="sessionf.dateFin.errors?.['required']">
+                            dateFin is required.
+                        </div>
+                    </div>
                 </div>
                 <div class="field">
                     <label for="name">Status (Open or closed )</label>
@@ -204,6 +224,12 @@
                         <p-inputNumber id="price" formControlName="nbrPlace" [(ngModel)]="sessionf.nbrPlace"  locale="en-Dt"></p-inputNumber>
 
                     </div>
+                    <div *ngIf="sessionf.nbrPlace.invalid && (sessionf.nbrPlace.touched)"
+                    class="alert">
+                    <div *ngIf="sessionf.nbrPlace.errors?.['required']">
+                       nbr Places  is required.
+                    </div>
+                </div>
                    
                 </div>
               
