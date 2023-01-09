@@ -209,7 +209,7 @@ this.display=!this.display;
 
         if(this.stage._id== undefined ||this.stage._id== "" ){
        this.stage.idRh="0";
-     this.stage.societe="hdg";
+    // this.stage.societe="hdg";
             this.stageservice.saveStage(this.stage).subscribe({
                 next: (v:any) => {
                     this.reset();

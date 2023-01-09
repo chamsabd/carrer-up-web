@@ -43,7 +43,7 @@ import { OrderListModule } from 'primeng/orderlist';
 import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, DemandeComponent,InscritComponent,FormationComponent, AddFormationComponent, FormationsListesComponent,
+        AppComponent, NotfoundComponent,FormationComponent, DemandeComponent,InscritComponent, AddFormationComponent, FormationsListesComponent,
     ],
     imports: [BrowserModule,
         AppRoutingModule,

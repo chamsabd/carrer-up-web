@@ -124,7 +124,7 @@
 				</p-dialog>
 			</form>
 
-<p-dialog header="Dialog" [(visible)]="displayup" [modal]="true" showEffect="fade"
+<p-dialog header="Dialog" *ngIf="role.includes('ROLE_USER')" [(visible)]="displayup" [modal]="true" showEffect="fade"
 [style]="{width: '50vw'}" [breakpoints]="{'960px': '75vw'}">
 <!-- [customUpload]="true" (uploadHandler)="onUpload($event)" -->
 <p-fileUpload name="file" url="/stage-server/file/upload/{{id}}" (onUpload)="onUpload($event)"
@@ -234,8 +234,7 @@
 									
 
 									<p-splitButton *ngIf="role.includes('ROLE_RH')"  label="action"  (onDropdownClick)="test(stage._id)"  [model]="items"   styleClass="p-button-success"></p-splitButton>
-									<button pButton pRipple (click)="test(stage._id); displayup=true" type="button" label="postuler" class="p-button-text"></button>
-			
+									<button pButton *ngIf="role.includes('ROLE_USER')"  pRipple (click)="test(stage._id); displayup=true" type="button" label="postuler" class="p-button-text"></button>
 							</div>
 
 						</div>
@@ -264,7 +263,7 @@
 								<div class="mb-3">{{stage.description}}</div>
 								<p-splitButton *ngIf="role.includes('ROLE_RH')"  class="mb-3" label="action"  (onDropdownClick)="test(stage._id)"  [model]="items" styleClass="p-button-success"></p-splitButton>
 								
-								<button pButton pRipple (click)="test(stage._id); displayup=true" type="button" label="postuler" class="p-button-text"></button>
+								<button pButton *ngIf="role.includes('ROLE_USER')" pRipple (click)="test(stage._id); displayup=true" type="button" label="postuler" class="p-button-text"></button>
 			
 	
 							</div>

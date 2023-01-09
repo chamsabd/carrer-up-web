@@ -60,7 +60,7 @@
                     <td><span>{{s.nbrPlace}}</span></td>
                     <td><span>{{s.responsable_id}}</span></td>
                     <td>
-                        <button pButton [disabled]="inscrits[s.id] == true" (click)="sendDemande(s.id)">Send</button>
+                        <button  pButton *ngIf="role.includes('ROLE_USER')" [disabled]="inscrits[s.id] == true" (click)="sendDemande(s.id)">Send</button>
                     </td>
                 </tr>
             </ng-template>

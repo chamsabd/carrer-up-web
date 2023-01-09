@@ -14,7 +14,7 @@ import { AuthGuard } from 'src/app/auth-guard.guard';
         { path: 'changepass', loadChildren: () => import('./changepass/change-pass.module').then(m => m.ChangePassModule) },
         { path: 'passchange', loadChildren: () => import('./changepass/passchange/pass-change.module').then(m => m.PassChangeModule) },
        
-        { path: '**', redirectTo: '/notfound' }
+       // { path: '**', redirectTo: '/notfound' }
     ])],
     exports: [RouterModule]
 })
