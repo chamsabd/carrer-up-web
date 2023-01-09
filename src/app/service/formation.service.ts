@@ -14,8 +14,7 @@ export class FormationsService {
   public token = localStorage.getItem("_token")
   public headers = new HttpHeaders({
     'Access-Control-Allow-Origin':"*",
-    'Content-Type':'application/json',
-    "Authorization": `Bearer ${this.token}`
+    'Content-Type':'application/json'
   })
 
   getData() {

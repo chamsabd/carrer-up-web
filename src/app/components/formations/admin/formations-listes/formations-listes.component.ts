@@ -55,10 +55,7 @@ export class FormationsListesComponent {
 
   
   ngOnInit(): void {
-    this.fservice.getData().subscribe((response:any) => {
-      this.formations = response["content"];
-      console.log(this.formations);
-     });
+   this.getformation();
      this.form = new FormGroup({
       'nom': new FormControl(null, [Validators.required, Validators.minLength(4)]),
       'category': new FormControl(null, [Validators.required,Validators.minLength(4)]),
@@ -74,6 +71,15 @@ export class FormationsListesComponent {
      
     })
 }
+getformation(){
+  this.fservice.getData().subscribe((response:any) => {
+    
+    this.formations = response["content"];
+  
+   });
+}
+
+
     openNew() {
       
       this.submitted = false;
@@ -91,7 +97,7 @@ export class FormationsListesComponent {
         this.addfService.addPerson(this.formation)
             .subscribe(data => {
               console.log(data)
-              this.fservice.getData()
+              this.getformation();
 
             })  
                    
@@ -106,7 +112,7 @@ export class FormationsListesComponent {
         this.productDialog = true;
         this.fservice.editDataFormation(formation.id, this.formation);
         console.log(this.formation);
-        this.fservice.getData()
+        this.getformation();
       }
 
       deleteProduct(formation: Formation) {
@@ -183,9 +189,6 @@ export class FormationsListesComponent {
 
         return index;
       }
-
-
-
       onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
       }
@@ -216,7 +219,7 @@ export class FormationsListesComponent {
         this.sessionsService.addData(this.sessionf)
         .subscribe(data => {
           console.log(data) ;
-          this.refreshFormations();        
+          this.getformation();       
         })
 
           

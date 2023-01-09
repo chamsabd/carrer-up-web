@@ -44,12 +44,19 @@ role="";
                         label: 'Available Courses',
                         icon: 'pi pi-fw pi-bookmark',
                         routerLink: ['/admin/courses']
-                    }
+                    },
+                    {
+                        label: 'users',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['/user']
+                    },
+
                     
 
 
                ]
             }:'',
+           
         ];
     }
 }

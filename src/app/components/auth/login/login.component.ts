@@ -66,6 +66,7 @@ if (t) {
                 sessionStorage.setItem('token',btoa (data.body['tokenType'] + " " +data.body['accessToken']));
                 sessionStorage.setItem('role',btoa (data.body['roles']));
                 sessionStorage.setItem('id',btoa (data.body['id']));
+                sessionStorage.setItem('societe',btoa (data.body['societe']));
                 sessionStorage.setItem('username',btoa (data.body['username']));
                 sessionStorage.setItem('email',btoa (data.body['email']));
    

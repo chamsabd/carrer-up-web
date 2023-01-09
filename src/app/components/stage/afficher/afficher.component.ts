@@ -206,9 +206,8 @@ this.display=!this.display;
     }
     insertData() {
 
-
-        if(this.stage._id== undefined ||this.stage._id== "" ){
-       this.stage.idRh="0";
+//this.stage.societe=UserService.societe;
+ if(this.stage._id== undefined ||this.stage._id== "" ){     
     // this.stage.societe="hdg";
             this.stageservice.saveStage(this.stage).subscribe({
                 next: (v:any) => {
@@ -220,15 +219,14 @@ this.display=!this.display;
                 error: (e:any) =>{
                     this.reset()
                 this.display=!this.display
-                this.messageService.add({ severity: 'error', summary: 'erreur', detail: 'some thing went wrong' });
+                this.messageService.add({ severity: 'error', summary: 'erreur', detail: e.body });
             
                 }
             })}
             else{
 
-                console.log("update");
-
-                this.stage.idRh="0";
+               
+               
      
             this.stageservice.updateStage(this.stage).subscribe({
                 next: (v:any) => {
