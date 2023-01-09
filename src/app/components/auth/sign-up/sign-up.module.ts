@@ -11,14 +11,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SignUpRoutingModule } from "./sign-up-routing.module";
 import { UserService } from 'src/app/service/user.service';
 import { HttpClientModule } from '@angular/common/http';
-
+import { ToastModule } from 'primeng/toast';
 
 import { SignUpComponent } from './sign-up.component';
 
 @NgModule({
     imports: [
         CommonModule,
-       
+        ToastModule,
         ButtonModule,
         CheckboxModule,
         InputTextModule,
