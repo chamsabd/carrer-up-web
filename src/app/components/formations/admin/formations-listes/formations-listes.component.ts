@@ -17,6 +17,7 @@ import { SessionService } from 'src/app/service/session.service';
 export class FormationsListesComponent {
   submitted: boolean = false;
   productDialog: boolean = false;
+  mindate:any= new Date();
   sessionDialog :boolean =false;
   deleteFormationDialog: boolean = false;
   deleteSessionDialog: boolean = false;
