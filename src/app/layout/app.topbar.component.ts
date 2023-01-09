@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
-import { CookieService } from 'ngx-cookie-service';
 import { MenuItem } from 'primeng/api';
 import { UserService } from '../service/user.service';
 import { LayoutService } from "./service/app.layout.service";
@@ -10,7 +9,7 @@ import { Router } from '@angular/router';
     templateUrl: './app.topbar.component.html'
 })
 export class AppTopBarComponent implements OnInit{
-    constructor(private userservice: UserService,public layoutService: LayoutService,private cookieService: CookieService, private router: Router) { }
+    constructor(private userservice: UserService,public layoutService: LayoutService, private router: Router) { }
     ngOnInit(): void {
       
     }
