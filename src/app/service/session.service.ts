@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class SessionService {
 
   constructor(private http: HttpClient) { }
-  public BaseUrl = '/FORMATION-SERVER/sessions';
+  public BaseUrl = '/formation-server/sessions';
 addData(s:Session ):Observable<any> {
 
     const headers = { 'content-type': 'application/json'}  

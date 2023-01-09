@@ -5,6 +5,7 @@ import { Formation } from 'src/app/api/formation.model';
 import { AddformationService } from 'src/app/service/addformation.service';
 import { DemandeService } from 'src/app/service/demande.service';
 import { FormationsService } from 'src/app/service/formation.service';
+import { UserService } from 'src/app/service/user.service';
 interface expandedRows {
   [key: string]: boolean;
 }
@@ -25,8 +26,10 @@ export class FormationComponent {
     private formationServices:FormationsService,
     private demservice: DemandeService
   ) { }
- 
+ role="";
   ngOnInit(): void {
+    this.role = UserService.role;
+        console.log(this.role);
     this.formationServices.getData().subscribe((response:any) => {
       this.formations = response["content"];
       console.log(this.formations);

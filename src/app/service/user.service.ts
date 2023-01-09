@@ -52,7 +52,12 @@ export class UserService {
   get role(): any {
     return sessionStorage.getItem('role')==null?null:atob (sessionStorage.getItem('role')!);
   }
-
+  static get id(): any {
+    return sessionStorage.getItem('id')==null?null:atob (sessionStorage.getItem('id')!);
+  }
+ static get role(): any {
+    return sessionStorage.getItem('role')==null?null:atob (sessionStorage.getItem('role')!);
+  }
 body(user : User){
   const body: User = {
     confirmpassword: user.confirmpassword,

@@ -1,40 +1,36 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AfficherRoutingModule } from './afficher-routing.module';
 import { AfficherComponent } from './afficher.component';
+import { AfficherRoutingModule } from './afficher-routing.module';
 import { TableModule } from 'primeng/table';
-import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
-import { ToastModule } from 'primeng/toast';
-import { ToolbarModule } from 'primeng/toolbar';
-import { RatingModule } from 'primeng/rating';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { RippleModule } from 'primeng/ripple';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { DialogModule } from 'primeng/dialog';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ToastModule } from 'primeng/toast';
+import { SliderModule } from 'primeng/slider';
+import { RatingModule } from 'primeng/rating';
 
 @NgModule({
     imports: [
       CommonModule,
       AfficherRoutingModule,
-      TableModule,
-      FileUploadModule,
       FormsModule,
-      ButtonModule,
-      RippleModule,
-      ToastModule,
-      ToolbarModule,
+      TableModule,
       RatingModule,
+      ButtonModule,
+      SliderModule,
       InputTextModule,
-      InputTextareaModule,
+      ToggleButtonModule,
+      RippleModule,
+      MultiSelectModule,
       DropdownModule,
-      RadioButtonModule,
-      InputNumberModule,
-      DialogModule
+      ProgressBarModule,
+      ToastModule
     ],
     declarations: [AfficherComponent]
 })

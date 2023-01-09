@@ -24,10 +24,10 @@ import { LoginComponent } from './components/auth/login/login.component';
                 path: '', component: AppLayoutComponent,canActivate: [AuthGuard],
                 children: [
                  //{ path: '', redirectTo: '/stage' },
-                 { path: '',canActivate: [RolesGuard],  data: { roles: ["ROLE_USER","ROLE_ADMIN"] }, component: FormationComponent },
+                 { path: '',canActivate: [RolesGuard],  data: { roles: ["ROLE_USER","ROLE_ADMIN","ROLE_RESPONSABLE","ROLE_ADMIN","ROLE_RH"] }, component: FormationComponent },
              
                     { path: 'stage' ,loadChildren: () => import('./components/stage/stage.module').then(m => m.StageModule) },
-                    { path: 'user',loadChildren: () => import('./components/users/user.module').then(m => m.UserModule) },
+                  { path: 'user',loadChildren: () => import('./components/users/user.module').then(m => m.UserModule) },
                 { path: 'demandes',canActivate: [RolesGuard],  data: { roles: ["ROLE_RESPONSABLE"] }, component: DemandeComponent },
                 { path: 'demandes/inscrit',canActivate: [RolesGuard],  data: { roles: ["ROLE_RESPONSABLE"] }, component: InscritComponent },
                 { path: 'courses/formations',canActivate: [RolesGuard],  data: { roles: ["ROLE_USER"] }, component: FormationComponent },
