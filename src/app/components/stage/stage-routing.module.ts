@@ -7,7 +7,7 @@ import { AfficherModule } from './afficher/afficher.module';
     imports: [RouterModule.forChild([
      
         { path: '',canActivate: [RolesGuard],  data: { roles: ["ROLE_USER","ROLE_ADMIN"] }, loadChildren: () => import('./afficher/afficher.module').then(m => m.AfficherModule )   },
-        { path: '**', redirectTo: '/notfound' }
+       // { path: '**', redirectTo: '/notfound' }
     ])],
     exports: [RouterModule]
 })
