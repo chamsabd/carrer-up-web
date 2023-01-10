@@ -19,7 +19,6 @@ export class RolesGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
      
       const role = this.userService.role;
-      console.log(role);
       
       if (route.data['roles'] && route.data['roles'].indexOf(role) === -1) {
         // role not authorised so redirect to home page

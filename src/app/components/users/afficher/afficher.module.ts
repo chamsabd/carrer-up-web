@@ -8,28 +8,24 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { RippleModule } from 'primeng/ripple';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { DropdownModule } from 'primeng/dropdown';
-import { ProgressBarModule } from 'primeng/progressbar';
+import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
-import { SliderModule } from 'primeng/slider';
-import { RatingModule } from 'primeng/rating';
-
+import { MultiSelectModule } from "primeng/multiselect";
 @NgModule({
     imports: [
       CommonModule,
       AfficherRoutingModule,
       FormsModule,
       TableModule,
-      RatingModule,
+      DialogModule,
       ButtonModule,
-      SliderModule,
+      MultiSelectModule,
       InputTextModule,
       ToggleButtonModule,
       RippleModule,
-      MultiSelectModule,
-      DropdownModule,
-      ProgressBarModule,
+    
+  
+    
       ToastModule
     ],
     declarations: [AfficherComponent]

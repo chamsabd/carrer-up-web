@@ -11,6 +11,7 @@ export class UserService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
   readonly rootUrl = '/auth-server/';
+
   constructor(private http: HttpClient,private router: Router) {
     var v=false;
   //   this.validate().subscribe(
@@ -47,145 +48,154 @@ export class UserService {
   
    get token(): any { 
     return sessionStorage.getItem('token')==null?null:atob (sessionStorage.getItem('token')!) ;
+
   }
   get role(): any {
-    return sessionStorage.getItem('role')==null?null:atob (sessionStorage.getItem('role')!);
+    return sessionStorage.getItem('role') == null ? null : atob(sessionStorage.getItem('role')!);
   }
   static get id(): any {
-    return sessionStorage.getItem('id')==null?null:atob (sessionStorage.getItem('id')!);
+    return sessionStorage.getItem('id') == null ? null : atob(sessionStorage.getItem('id')!);
   }
- static get role(): any {
-    return sessionStorage.getItem('role')==null?null:atob (sessionStorage.getItem('role')!);
+  static get role(): any {
+    return sessionStorage.getItem('role') == null ? null : atob(sessionStorage.getItem('role')!);
   }
-body(user : User){
-  const body: User = {
-    confirmpassword: user.confirmpassword,
-    password: user.password,
-    email: user.email,
-    username: user.username,
-    nom: user.nom,
-    roles: user.roles,
-    prenom: user.prenom,
-    code: user.code,
-    id: undefined
+  static get societe(): any {
+    return sessionStorage.getItem('societe') == null ? null : atob(sessionStorage.getItem('societe')!);
   }
-  return body;
-}
+  body(user: User) {
+    const body: User = {
+      confirmpassword: user.confirmpassword,
+      password: user.password,
+      email: user.email,
+      username: user.username,
+      nom: user.nom,
+      roles: user.roles,
+      prenom: user.prenom,
+      code: user.code,
+      id: undefined
+    }
+    return body;
+  }
 
-  registerUser(user : User){
-    const body:User=this.body(user);
+  registerUser(user: User) {
+    const body: User = this.body(user);
     let headers = new HttpHeaders({
-'Access-Control-Allow-Origin':"*",
-'Content-Type':'application/json'
+      'Access-Control-Allow-Origin': "*",
+      'Content-Type': 'application/json'
     });
-    
- 
-  
+
+
+
     //  headers.append("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method,"
     //  + " Access-Control-Request-Headers,authorization");
-console.log(headers.get('Access-Control-Allow-Origin'));
+    console.log(headers.get('Access-Control-Allow-Origin'));
 
- return   this.http.post(this.rootUrl + 'code', user,{  observe: 'response' }); 
-   
-  }
-  
-  saveUser(user : User){
-   
-    const body:User=this.body(user);
-    let headers = new HttpHeaders({
-'Access-Control-Allow-Origin':"*",
-'Content-Type':'application/json',
-   });
-    
- 
-  
-    //  headers.append("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method,"
-    //  + " Access-Control-Request-Headers,authorization");
-console.log(headers.get('Access-Control-Allow-Origin'));
+    return this.http.post(this.rootUrl + 'code', user, { observe: 'response' });
 
- return   this.http.post(this.rootUrl + 'signup', body,{  observe: 'response' }); 
-   
   }
 
-  updateUser(user : User){
-   
-    const body:User=this.body(user);
+  saveUser(user: User) {
+
+    const body: User = this.body(user);
     let headers = new HttpHeaders({
-'Access-Control-Allow-Origin':"*",
-'Content-Type':'application/json',
-   });
-
- return   this.http.put(this.rootUrl + 'user', body,{  observe: 'response' });  
-  }
- getUsers(){
-   
-    
-    let headers = new HttpHeaders({
-'Access-Control-Allow-Origin':"*",
-'Content-Type':'application/json',
-   });
-
- return   this.http.get(this.rootUrl + 'user', {  observe: 'response' });  
-  }
-
-  sendcode(user:User){
-
-    const body:User=this.body(user);
-    let headers = new HttpHeaders({
-'Access-Control-Allow-Origin':"*",
-'Content-Type':'application/json',
-   });
-console.log(headers.get('Access-Control-Allow-Origin'));
-
- return   this.http.post(this.rootUrl + 'sendcode', body,{  observe: 'response' }); 
-   
-  }
-  changepass(user : User){
-    const body:User=this.body(user);
-    let headers = new HttpHeaders({
-'Access-Control-Allow-Origin':"*",
-'Content-Type':'application/json',
-   });
-    
- 
-  
-    //  headers.append("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method,"
-    //  + " Access-Control-Request-Headers,authorization");
-console.log(headers.get('Access-Control-Allow-Origin'));
- return   this.http.put(this.rootUrl + "changepass", body,{  observe: 'response' }); 
-   
-  }
-
-  login(user : User){
-    const body:User=this.body(user);
-    let headers = new HttpHeaders({
-'Access-Control-Allow-Origin':"*",
-'Content-Type':'application/json'
+      'Access-Control-Allow-Origin': "*",
+      'Content-Type': 'application/json',
     });
-    
- 
-  
+
+
+
     //  headers.append("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method,"
     //  + " Access-Control-Request-Headers,authorization");
-console.log(headers.get('Access-Control-Allow-Origin'));
+    console.log(headers.get('Access-Control-Allow-Origin'));
 
- return   this.http.post(this.rootUrl + 'signin', body,{  observe: 'response' }).pipe(
-  tap((response: any) => {
-    this._isLoggedIn$.next(true);
-     
-  })
-);
-   
+    return this.http.post(this.rootUrl + 'signup', body, { observe: 'response' });
+
+  }
+
+  updateUser(user: User) {
+
+    const body: User = this.body(user);
+    let headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': "*",
+      'Content-Type': 'application/json',
+    });
+    return this.http.put(this.rootUrl + 'user', body, { observe: 'response' });
+  }
+  getUsers() {
+
+    let headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': "*",
+      'Content-Type': 'application/json',
+    });
+
+    return this.http.get(this.rootUrl + 'user', { observe: 'response' });
+  }
+  changerole(email: String, roles: String[],societe:String) {
+
+
+    let headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': "*",
+      'Content-Type': 'application/json',
+    });
+
+    return this.http.put(this.rootUrl + 'user', { "email": email, "roles": roles,"societe":societe }, { observe: 'response' });
+  }
+
+  sendcode(user: User) {
+    const body: User = this.body(user);
+    let headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': "*",
+      'Content-Type': 'application/json',
+    });
+    console.log(headers.get('Access-Control-Allow-Origin'));
+
+    return this.http.post(this.rootUrl + 'sendcode', body, { observe: 'response' });
+
+  }
+  changepass(user: User) {
+    const body: User = this.body(user);
+    let headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': "*",
+      'Content-Type': 'application/json',
+    });
+
+    //  headers.append("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method,"
+    //  + " Access-Control-Request-Headers,authorization");
+    console.log(headers.get('Access-Control-Allow-Origin'));
+    return this.http.put(this.rootUrl + "changepass", body, { observe: 'response' });
+
+  }
+
+  login(user: User) {
+    const body: User = this.body(user);
+    let headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': "*",
+      'Content-Type': 'application/json'
+    });
+
+
+
+    //  headers.append("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method,"
+    //  + " Access-Control-Request-Headers,authorization");
+    console.log(headers.get('Access-Control-Allow-Origin'));
+
+    return this.http.post(this.rootUrl + 'signin', body, { observe: 'response' }).pipe(
+      tap((response: any) => {
+        this._isLoggedIn$.next(true);
+
+      })
+    );
+
   }
 
 
-log(){
+  log() {
 
     sessionStorage.clear();
     this.router.navigate(['/auth/login']);
 
 
-}
+  }
 
   logout(){
    // this.cookieService.deleteAll();
@@ -205,6 +215,7 @@ log(){
     //   }
     
     // });
+
   }
 }
 

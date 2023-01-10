@@ -2,6 +2,33 @@
 	<div class="col-12">
 		<div class="card">
 			<h5>Users</h5>
+<p-toast></p-toast>
+			<p-dialog header="roles"  [(visible)]="displayup" [modal]="true" showEffect="fade"
+			[style]="{width: '50vw',height:'40vw'}" [breakpoints]="{'960px': '75vw'}">
+			<!-- [customUpload]="true" (uploadHandler)="onUpload($event)" -->
+			<p-multiSelect optionValue="value" [style]="{width: '45vw'}"  [options]="itemsAsSelectItems" [(ngModel)]="roles" placeholder="Select role" optionLabel="label"  class="multiselect-custom" display="chip">
+				<ng-template let-role pTemplate="item">
+					<div class="flex align-items-center">
+							<span class="ml-2">{{role.value}}</span>
+					</div>
+				</ng-template>
+			</p-multiSelect>
+			<div *ngIf="isFound('ROLE_RH')" >
+				nom de societe
+			<input pInputText  id="societe"  required  [required]="isFound('ROLE_RH')"  name="societe" [(ngModel)]="societe" minlength="4" type="text" />				
+		</div>
+			<ng-template pTemplate="footer">
+			
+				<button pButton  (click)="displayup=false;this.roles=[]" icon="pi pi-times" label="close"
+					class="p-button-outlined"></button>
+					<button  pButton icon="pi pi-check" type="submit" label="save" (click)="saverole()"
+							class="p-button-outlined"></button>
+			</ng-template>
+			
+			</p-dialog>
+
+
+
 			<p-table #dt1 [value]="users" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll">
 				<ng-template pTemplate="caption">
 					<div class="flex justify-content-between flex-column sm:flex-row">
@@ -55,7 +82,7 @@
 						
 					
 						<td class="text-center">
-                            <button pButton  pRipple (click)="test(user.email); displayup=true" type="button" label="postuler" class="p-button-text"></button>
+                            <button pButton  pRipple (click)="test(user.email); displayup=true" type="button" label="roles" class="p-button-text"></button>
 			
 							</td>
 					</tr>
