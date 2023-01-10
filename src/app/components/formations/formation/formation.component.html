@@ -1,0 +1,79 @@
+<div class="col-12">
+    <div class="card">
+        <h2>Trainig Courses</h2>
+        <div class="flex justify-content-between flex-column sm:flex-row">
+            <span class="p-input-icon-left mb-2">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword" class="w-full"/>
+            </span>
+        </div>
+        <p-table #dt1 [value]="formations" dataKey="name" [globalFilterFields]="['nom','category','prix','rating']" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
+            <ng-template pTemplate="caption">
+                <button pButton icon="pi pi-fw {{isExpanded ? 'pi-minus' : 'pi-plus'}}" label="{{isExpanded ? 'Collapse All' : 'Expand All'}}" (click)="expandAll()"></button>
+                <div class="flex table-header">
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem"></th>
+                    <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                    <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
+                    <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
+                    <th pSortableColumn="rating">Rating <p-sortIcon field="rating"></p-sortIcon></th>
+                    <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-f let-expanded="expanded">
+                <tr>
+                    <td>
+                        <button type="button" pButton pRipple [pRowToggler]="f" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                    </td>
+                    <td style="min-width: 12rem;">{{f.nom}}</td>
+                    <td style="min-width: 8rem;">{{f.prix }}</td>
+                    <td style="min-width: 10rem;">{{f.category}}</td>
+                    <td style="min-width: 10rem;"><p-rating  [readonly]="false" [cancel]="false"></p-rating></td>
+                    <td style="min-width: 10rem;">{{f.description}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="rowexpansion" let-f>
+                <tr>
+                    <td colspan="7">
+                        <div class="p-3">
+                            <p-table [value]="f.sessions" dataKey="id" responsiveLayout="scroll">
+                                <ng-template pTemplate="header">
+                <tr>
+                    
+                    <th pSortableColumn="nom">Nom <p-sortIcon field="nom"></p-sortIcon></th>
+                    <th pSortableColumn="dateDebut">Start date <p-sortIcon field="dateDebut"></p-sortIcon></th>
+                    <th pSortableColumn="dateFin">Date Fin <p-sortIcon field="dateFin"></p-sortIcon></th>
+                    <th pSortableColumn="nbrPlace">Places <p-sortIcon field="nbrPlace"></p-sortIcon></th>
+                    <th pSortableColumn="nbrPlace">Trainig Manager <p-sortIcon field="nbrPlace"></p-sortIcon></th>
+                    <th style="width: 4rem">action</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-s>
+                <tr>
+                  
+                    <td>{{s.nom}}</td>
+                    <td>{{s.dateDebut}}</td>
+                    <td>{{s.dateFin}}</td>
+                    <td><span>{{s.nbrPlace}}</span></td>
+                    <td><span>{{s.responsable_id}}</span></td>
+                    <td>
+                        <button  pButton *ngIf="role.includes('ROLE_USER')" [disabled]="inscrits[s.id] == true" (click)="sendDemande(s.id)">Send</button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="6">There are no order for this product yet.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    </td>
+    </tr>
+    </ng-template>
+    </p-table>
+</div>
+</div>

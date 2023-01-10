@@ -1,0 +1,50 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError, map, Observable, throwError } from 'rxjs';
+import { Formation } from '../api/formation.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FormationsService {
+
+  constructor( private http: HttpClient,) { }
+  public localUrl = '/formation-server/formations/';
+
+  public token = localStorage.getItem("_token")
+  public headers = new HttpHeaders({
+    'Access-Control-Allow-Origin':"*",
+    'Content-Type':'application/json'
+  })
+  body(formation : Formation){
+    const body: Formation = {
+      id: formation.id,
+      nom: formation.nom,
+      description:formation.description,
+      category: formation.category,
+      prix: formation.prix,
+      sessions: []
+    }
+    return body;
+  }
+  getData() {
+    return this.http.get(this.localUrl+'',{headers: this.headers});
+  }
+  deleteDataFormation(id:number){
+    
+     return this.http.delete<Formation>(`${this.localUrl}/${id}`);
+    
+
+  }
+  editDataFormation(formation:Formation):Observable<any>{
+    {
+      const body:Formation=this.body(formation);
+      return   this.http.put(this.localUrl +body.id, body,{  observe: 'response' }); 
+    }
+  
+  }
+  findByCategory(cat:string){
+    return this.http.get(`${this.localUrl}/${cat}`)}
+  }
+  
+  
