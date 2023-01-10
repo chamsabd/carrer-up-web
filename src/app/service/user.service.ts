@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { User } from '../api/user.model';
-import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Observable } from 'rxjs';
 import { Router, UrlTree } from '@angular/router';
@@ -12,7 +11,7 @@ export class UserService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
   readonly rootUrl = '/auth-server/';
-  constructor(private http: HttpClient,private cookieService: CookieService, private router: Router) {
+  constructor(private http: HttpClient,private router: Router) {
     var v=false;
   //   this.validate().subscribe(
   //     {
@@ -189,7 +188,7 @@ log(){
 }
 
   logout(){
-    this.cookieService.deleteAll();
+   // this.cookieService.deleteAll();
         this.router.navigate(['/auth/login']);
     // this.http.get(this.rootUrl + 'log').subscribe({
     //   next: (data:any) => {
