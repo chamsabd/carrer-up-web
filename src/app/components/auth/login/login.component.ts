@@ -5,7 +5,6 @@ import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { UserService } from 'src/app/service/user.service';
 import { Router, ROUTES } from '@angular/router';
 import {ConfirmationService,  MessageService } from 'primeng/api';
-import {CookieService} from 'ngx-cookie-service';
 import { tap } from 'rxjs';
 @Component({
     selector: 'app-login',
@@ -33,7 +32,7 @@ export class LoginComponent implements OnInit{
     password!: string;
     user: User = new User;
    
-    constructor(private cookieService:CookieService,public router:Router,public layoutService: LayoutService,public userService:UserService,public messageService: MessageService) {
+    constructor(public router:Router,public layoutService: LayoutService,public userService:UserService,public messageService: MessageService) {
   
  var t=  !!this.userService.token
 if (t) {

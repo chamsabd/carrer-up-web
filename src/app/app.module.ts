@@ -9,7 +9,7 @@ import { UserService } from './service/user.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './JwtInterceptor';
 import { ErrorInterceptor } from './ErrorInterceptor';
-
+import { CalendarModule } from "primeng/calendar";
 
 import { BrowserModule } from '@angular/platform-browser';
 import { DemandeComponent } from './components/demandes/demande/demande.component';
@@ -51,6 +51,7 @@ import { DropdownModule } from 'primeng/dropdown';
         InputTextModule,
         TableModule,
         DialogModule,
+        CalendarModule,
         ConfirmDialogModule,
         ConfirmPopupModule,
         FormsModule,

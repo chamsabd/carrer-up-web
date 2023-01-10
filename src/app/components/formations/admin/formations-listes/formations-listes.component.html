@@ -191,12 +191,7 @@
                         <p-calendar dateFormat="yy-mm-dd" [showIcon]="true" [required]="true" #datedebut="ngModel"
 											name="dateDebut" [minDate]="mindate" [maxDate]="sessionf.dateDebut"
 											[(ngModel)]="sessionf" inputId="icon"></p-calendar>
-										<div *ngIf="sessionf.dateDebut.invalid && .(sessionf.dateDebut.dirty || sessionf.dateDebut.touched)"
-											class="alert">
-											<div *ngIf="sessionf.dateDebut.errors?.['required']">
-												date is required.
-											</div>
-                        </div>
+									
                     </div>
                 </div>
 
@@ -207,12 +202,7 @@
                     <p-calendar dateFormat="yy-mm-dd" [showIcon]="true" #dateFin="ngModel" [required]="true"
                         name="dateFin" [minDate]="sessionf.dateFin!" [(ngModel)]="sessionf.dateFin"
                         inputId="icon"></p-calendar>
-                    <div *ngIf="dateFin.invalid && (dateFin.dirty || dateFin.touched)"
-                        class="alert">
-                        <div *ngIf="sessionf.dateFin.errors?.['required']">
-                            dateFin is required.
-                        </div>
-                    </div>
+                  
                 </div>
                 <div class="field">
                     <label for="name">Status (Open or closed )</label>
@@ -224,12 +214,7 @@
                         <p-inputNumber id="price" formControlName="nbrPlace" [(ngModel)]="sessionf.nbrPlace"  locale="en-Dt"></p-inputNumber>
 
                     </div>
-                    <div *ngIf="sessionf.nbrPlace.invalid && (sessionf.nbrPlace.touched)"
-                    class="alert">
-                    <div *ngIf="sessionf.nbrPlace.errors?.['required']">
-                       nbr Places  is required.
-                    </div>
-                </div>
+                  
                    
                 </div>
               

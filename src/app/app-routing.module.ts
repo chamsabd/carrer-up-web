@@ -22,7 +22,7 @@ import { FormationsListesComponent } from './components/formations/admin/formati
 
                 path: '', component: AppLayoutComponent,canActivate: [AuthGuard],
                 children: [
-                 { path: '', redirectTo: '/auth/login' }
+                 { path: '', redirectTo: '/auth/login' },
                  
                     { path: 'stage',loadChildren: () => import('./components/stage/stage.module').then(m => m.StageModule) },
                     { path: 'user',loadChildren: () => import('./components/users/user.module').then(m => m.UserModule) },
@@ -33,7 +33,7 @@ import { FormationsListesComponent } from './components/formations/admin/formati
             ]     
 
             },
-              {path:'admin/courses', component: FormationsListesComponent}
+              {path:'admin/courses', component: FormationsListesComponent},
             { path: 'auth', loadChildren: () => import('./components/auth/auth.module').then(m => m.AuthModule)},
             
 
