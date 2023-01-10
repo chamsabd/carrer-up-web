@@ -23,14 +23,15 @@ export class FormationsListesComponent {
   sessionf:Session={
     id: 0,
     nom: "",
-    dateDebut:  new Date(),
-    dateFin: new Date(),
+    dateDebut: undefined,
+    dateFin: undefined,
     etat: "",
     nbrPlace: 0,
     idResponsable: 0,
     formation_id: 0
   };
-
+  mindate:any= new Date();
+  
   f_id:number = 0;
   deleteProductsDialog: boolean = false;
   selectedProducts: Formation[] = [];
@@ -64,8 +65,8 @@ export class FormationsListesComponent {
     });
     this.form1=new FormGroup({
       'nom': new FormControl(null, [Validators.required, Validators.minLength(4)]),
-      'dateDebut': new FormControl(null, [Validators.required]),
-      'dateFin': new FormControl(null, [Validators.required]),
+      'dateDebut': new FormControl(undefined, [Validators.required]),
+      'dateFin': new FormControl(undefined, [Validators.required]),
       'etat': new FormControl(null, [Validators.required,]),
       'nbrPlace': new FormControl(null, [Validators.required]),
      
@@ -110,11 +111,24 @@ getformation(){
       editProduct(formation: Formation) {
         this.formation = { ...formation };
         this.productDialog = true;
-        this.fservice.editDataFormation(formation.id, this.formation);
         console.log(this.formation);
-        this.getformation();
+       
       }
+      editSession(session:Session){
+        this.sessionsService.editSession(this.sessionf.id,session).subscribe({next:(v:any) => {
+          this.getformation();
 
+          
+         
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Formation Updated', life: 3000 });
+        }})
+        
+        }
+          
+      
+         
+        
+      
       deleteProduct(formation: Formation) {
         this.deleteProductDialog = true;
         this.formation = { ...formation };
@@ -123,14 +137,14 @@ getformation(){
       confirmDeleteSelected() {
         this.deleteProductsDialog = false;
         this.formations = this.formations.filter(val => !this.selectedProducts.includes(val));
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Formations Deleted', life: 3000 });
         this.selectedProducts = [];
       }
 
       confirmDelete() {
         this.deleteProductDialog = false;
         this.formations = this.formations.filter(val => val.id !== this.formation.id);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Formation Deleted', life: 3000 });
         this.fservice.deleteDataFormation(this.formation.id).subscribe(res => {
           this.formations = this.formations.filter(item => item.id !== this.formation.id)});
           console.log('Post deleted successfully!');
@@ -142,9 +156,10 @@ getformation(){
         this.deleteSessionDialog = false;
         this.sessions = this.sessions.filter(val => val.id !== this.sessionf.id);
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'session Deleted', life: 3000 });
-        this.fservice.deleteDataFormation(this.sessionf.id).subscribe(res => {
+        this.sessionsService.deleteSession(this.sessionf.id).subscribe(res => {
           this.sessions = this.sessions.filter(item => item.id !== this.sessionf.id)});
           console.log('Post deleted successfully!');
+          this.getformation()
       };
 
       hideDialog() {
@@ -155,15 +170,21 @@ getformation(){
       saveProduct() {
        
           if (this.formation.id) {
+            this.fservice.editDataFormation(this.formation).subscribe({next:(v:any) => {
+              this.getformation();
+
               // @ts-ignore
-              this.formations[this.findIndexById(this.formation.id)] = this.formation;
-              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-          } else {
+              //this.formations[this.findIndexById(this.formation.id)] = this.formation;
+              this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Formation Updated', life: 3000 });
+            }})
+            }
+           else {
             this.formations.push(this.formation);
               this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
               this.onSubmit();
               this.submitted = true;
               this.form.reset();
+              this.getformation();
             }
 
          this.formations = [...this.formations];
@@ -174,7 +195,7 @@ getformation(){
             category: undefined,
             prix: undefined,
             sessions: []};
-            this.refreshFormations();
+            this.getformation();
           
       }
 
@@ -210,6 +231,7 @@ getformation(){
        
           this.deleteSessionDialog = true;
           this.sessionf = { ...s };
+         
       
         
       }
@@ -219,10 +241,11 @@ getformation(){
         this.sessionsService.addData(this.sessionf)
         .subscribe(data => {
           console.log(data) ;
-          this.getformation();       
         })
 
-          
+          this.sessionDialog=false;
+        this.submitted = true;
+        this.getformation();
       }
       refreshFormations() {
   

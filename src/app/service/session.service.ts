@@ -26,6 +26,7 @@ addData(s:Session ):Observable<any> {
  }
  editSession(id:number,data: any):Observable<any>{
    {
+   
      return this.http.put(`${this.BaseUrl}/${id}`, data);
    }
  

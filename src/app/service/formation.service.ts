@@ -9,14 +9,24 @@ import { Formation } from '../api/formation.model';
 export class FormationsService {
 
   constructor( private http: HttpClient,) { }
-  public localUrl = '/formation-server/formations';
+  public localUrl = '/formation-server/formations/';
 
   public token = localStorage.getItem("_token")
   public headers = new HttpHeaders({
     'Access-Control-Allow-Origin':"*",
     'Content-Type':'application/json'
   })
-
+  body(formation : Formation){
+    const body: Formation = {
+      id: formation.id,
+      nom: formation.nom,
+      description:formation.description,
+      category: formation.category,
+      prix: formation.prix,
+      sessions: []
+    }
+    return body;
+  }
   getData() {
     return this.http.get(this.localUrl+'',{headers: this.headers});
   }
@@ -26,9 +36,10 @@ export class FormationsService {
     
 
   }
-  editDataFormation(id:number,data: any):Observable<any>{
+  editDataFormation(formation:Formation):Observable<any>{
     {
-      return this.http.put(`${this.localUrl}/${id}`, data);
+      const body:Formation=this.body(formation);
+      return   this.http.put(this.localUrl +body.id, body,{  observe: 'response' }); 
     }
   
   }

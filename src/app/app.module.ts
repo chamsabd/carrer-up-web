@@ -9,6 +9,7 @@ import { UserService } from './service/user.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './JwtInterceptor';
 import { ErrorInterceptor } from './ErrorInterceptor';
+import { CalendarModule } from "primeng/calendar";
 
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -46,6 +47,8 @@ import { DropdownModule } from 'primeng/dropdown';
         AppComponent, NotfoundComponent,FormationComponent, DemandeComponent,InscritComponent, AddFormationComponent, FormationsListesComponent,
     ],
     imports: [BrowserModule,
+        CalendarModule,
+
         AppRoutingModule,
         AppLayoutModule,
         InputTextModule,

@@ -1,8 +1,8 @@
 export class Session {
     id!: number;
     nom!:String;
-    dateDebut!:Date;
-    dateFin!:Date;
+    dateDebut!:Date|undefined;
+    dateFin!:Date |undefined;
     etat!:String;
     nbrPlace!:number;
     idResponsable!:number;
